@@ -9,7 +9,7 @@
 
 @media (prefers-reduced-motion: no-preference) {
   .App-logo {
-    animation: App-logo-spin infinite 20s linear;
+    animation: App-logo-spin infinite 0s linear;
   }
 }
 
@@ -36,3 +36,78 @@
     transform: rotate(360deg);
   }
 }
+
+@keyframes marquee {
+  0% {
+    transform: translateX(100%);
+  }
+  100% {
+    transform: translateX(-100%);
+  }
+}
+
+.marquee-content {
+  display: inline-block;
+  white-space: nowrap;
+  padding-left: 100%;
+  animation: marquee 20s linear infinite;
+}
+
+.sticky-marquee {
+  position: sticky;
+  top: 0;
+  background: rgba(0, 0, 0, 0.5); /* 50% transparent black */
+  z-index: 100;
+}
+
+.custom-progress-container {
+  width: 100px;
+  height: 20px;
+  background: white;
+  border: 1px solid black;
+  display: flex;
+  align-items: center;
+}
+
+.custom-progress-bar {
+  height: 100%;
+  transition: width 0.3s;
+}
+
+.card {
+  width: 30%;
+  height: 250px; /* Increased height */
+  background: gray;
+  border-radius: 10px;
+}
+
+.custom-progress-container {
+  display: flex;
+  width: 100%; /* Make the progress bar container take up the full width */
+  height: 20px;
+  border-radius: 10px;
+  overflow: hidden; /* This will make sure the progress bars stay within the rounded container */
+}
+
+.custom-progress-bar {
+  height: 100%;
+}
+
+.sticky-marquee {
+  position: sticky;
+  top: 0;
+  background: rgba(0, 0, 0, 0.5);
+  z-index: 10;
+}
+
+.marquee-content {
+  display: inline-block;
+  white-space: nowrap;
+  animation: marquee 15s linear infinite;
+}
+
+@keyframes marquee {
+  from { transform: translateX(100%); }
+  to { transform: translateX(-100%); }
+}
+
