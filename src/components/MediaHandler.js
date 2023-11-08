@@ -4,8 +4,6 @@ const DID_API_KEY = process.env.REACT_APP_DID_API_KEY;
 class MediaHandler {
   constructor(mediaConfig) {
     this.mediaConfig = mediaConfig;
-    this.initUIElements();
-    this.bindEvents();
     this.peerConnection = null;
     this.streamId = null;
     this.sessionId = null;
