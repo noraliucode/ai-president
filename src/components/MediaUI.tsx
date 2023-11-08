@@ -6,7 +6,6 @@ import MediaHandler from "./MediaHandler";
 interface MediaConfig {
   audioUrl: string;
   videoUrl: string;
-  triggerTime: number; // Trigger time in milliseconds
 }
 
 // Define the prop type for MediaUI
@@ -20,22 +19,6 @@ const MediaUI: React.FC<MediaUIProps> = ({ mediaConfigs }) => {
   const mediaHandlerRef = useRef(
     new MediaHandler(mediaConfigs[activeConfigIndex])
   );
-
-  // Function to switch to the next config
-  const switchConfig = () => {
-    const nextIndex = (activeConfigIndex + 1) % mediaConfigs.length;
-    setActiveConfigIndex(nextIndex);
-    mediaHandlerRef.current = new MediaHandler(mediaConfigs[nextIndex]); // Update the MediaHandler with the new config
-  };
-
-  useEffect(() => {
-    const activeConfig = mediaConfigs[activeConfigIndex];
-    const timerId = setTimeout(switchConfig, activeConfig.triggerTime);
-
-    return () => {
-      clearTimeout(timerId); // Clear the timer when the component unmounts or the active config changes
-    };
-  }, [activeConfigIndex, mediaConfigs]);
 
   const onConnect = () => {
     mediaHandlerRef.current.connect();
