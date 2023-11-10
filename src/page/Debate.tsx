@@ -4,7 +4,8 @@ import MediaUI from "../components/MediaUI";
 const mediaConfigs = [
   {
     audioUrl: "https://archive.org/download/11yiyi/11yiyi.mp3",
-    videoUrl: "idle_a.mp4",
+    video: "idle_a.mp4",
+    elementId: "talk-video",
   },
 ];
 

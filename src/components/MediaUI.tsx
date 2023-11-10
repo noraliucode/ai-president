@@ -5,7 +5,8 @@ import MediaHandler from "./MediaHandler";
 // Define the MediaConfig type
 interface MediaConfig {
   audioUrl: string;
-  videoUrl: string;
+  video: string;
+  elementId: string;
 }
 
 // Define the prop type for MediaUI

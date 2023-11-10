@@ -5,7 +5,10 @@ const API_URL = process.env.REACT_APP_API_URL;
 
 class MediaHandler {
   constructor(mediaConfig) {
-    this.talkVideo = document.getElementById("talk-video");
+    const { elementId, audioUrl, video } = mediaConfig;
+    this.audioUrl = audioUrl;
+    this.video = video;
+    this.talkVideo = document.getElementById(elementId);
     this.mediaConfig = mediaConfig;
     this.peerConnection = null;
     this.streamId = null;
@@ -96,20 +99,16 @@ class MediaHandler {
       let talkResponse;
       try {
         talkResponse = await axios.post(`${API_URL}/streams`, {
-          method: "POST",
-          body: JSON.stringify({
-            streamId: this.streamId,
-            script: {
-              type: "audio",
-              audio_url:
-                "https://d-id-public-bucket.s3.us-west-2.amazonaws.com/webrtc.mp3",
-            },
-            driver_url: "bank://lively/",
-            config: {
-              stitch: true,
-            },
-            session_id: this.sessionId,
-          }),
+          streamId: this.streamId,
+          script: {
+            type: "audio",
+            audio_url: "https://archive.org/download/11yiyi/11yiyi.mp3",
+          },
+          driver_url: "bank://lively/",
+          config: {
+            stitch: true,
+          },
+          sessionId: this.sessionId,
         });
       } catch (error) {
         console.log("post streams error", error);
@@ -262,7 +261,7 @@ class MediaHandler {
   playIdleVideo() {
     console.log("playIdleVideo");
     this.talkVideo.srcObject = undefined;
-    this.talkVideo.src = "/idle_a.mp4";
+    this.talkVideo.src = this.video;
     this.talkVideo.loop = true;
   }
 
