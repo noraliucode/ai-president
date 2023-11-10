@@ -1,16 +1,35 @@
-const DID_API_URL = process.env.REACT_APP_DID_API_URL;
-const DID_API_KEY = process.env.REACT_APP_DID_API_KEY;
+// MediaHandler.js
+import axios from "axios";
+
+const API_URL = process.env.REACT_APP_API_URL;
 
 class MediaHandler {
   constructor(mediaConfig) {
+    this.talkVideo = document.getElementById("talk-video");
     this.mediaConfig = mediaConfig;
     this.peerConnection = null;
     this.streamId = null;
     this.sessionId = null;
     this.sessionClientAnswer = null;
     this.statsIntervalId = null;
-    this.videoIsPlaying = false;
-    this.lastBytesReceived = 0;
+    this.videoIsPlaying = undefined;
+    this.lastBytesReceived = undefined;
+
+    // not sure if we need to bind all these functions, can be removed if not needed
+    this.connect = this.connect.bind(this);
+    this.playVideo = this.playVideo.bind(this);
+    this.destroy = this.destroy.bind(this);
+    this.onIceCandidate = this.onIceCandidate.bind(this);
+    this.onIceConnectionStateChange =
+      this.onIceConnectionStateChange.bind(this);
+    this.onVideoStatusChange = this.onVideoStatusChange.bind(this);
+    this.onTrack = this.onTrack.bind(this);
+    this.createPeerConnection = this.createPeerConnection.bind(this);
+    this.setVideoElement = this.setVideoElement.bind(this);
+    this.playIdleVideo = this.playIdleVideo.bind(this);
+    this.stopAllStreams = this.stopAllStreams.bind(this);
+    this.closePC = this.closePC.bind(this);
+    this.fetchWithRetries = this.fetchWithRetries.bind(this);
   }
 
   async connect() {
@@ -24,27 +43,21 @@ class MediaHandler {
     this.stopAllStreams();
     this.closePC();
 
-    const sessionResponse = await this.fetchWithRetries(
-      `${DID_API_URL}/talks/streams`,
-      {
+    let sessionResponse;
+    try {
+      sessionResponse = await axios.post(`${API_URL}/talks-stream`, {
         method: "POST",
-        headers: {
-          Authorization: `Basic ${DID_API_KEY}`,
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          source_url:
-            "https://d-id-public-bucket.s3.amazonaws.com/or-roman.jpg",
-        }),
-      }
-    );
+      });
+    } catch (error) {
+      console.log("talks-stream error", error);
+    }
 
     const {
       id: newStreamId,
       offer,
       ice_servers: iceServers,
       session_id: newSessionId,
-    } = await sessionResponse.json();
+    } = await sessionResponse.data;
     this.streamId = newStreamId;
     this.sessionId = newSessionId;
 
@@ -60,20 +73,18 @@ class MediaHandler {
       return;
     }
 
-    const sdpResponse = await fetch(
-      `${DID_API_URL}/talks/streams/${this.streamId}/sdp`,
-      {
+    let sdpResponse;
+
+    try {
+      sdpResponse = await axios.post(`${API_URL}/ice`, {
         method: "POST",
-        headers: {
-          Authorization: `Basic ${DID_API_KEY}`,
-          "Content-Type": "application/json",
-        },
         body: JSON.stringify({
           answer: this.sessionClientAnswer,
           session_id: this.sessionId,
+          streamId: this.streamId,
         }),
-      }
-    );
+      });
+    } catch (error) {}
   }
 
   async playVideo() {
@@ -82,15 +93,12 @@ class MediaHandler {
       this.peerConnection?.signalingState === "stable" ||
       this.peerConnection?.iceConnectionState === "connected"
     ) {
-      const talkResponse = await this.fetchWithRetries(
-        `${DID_API_URL}/talks/streams/${this.streamId}`,
-        {
+      let talkResponse;
+      try {
+        talkResponse = await axios.post(`${API_URL}/streams`, {
           method: "POST",
-          headers: {
-            Authorization: `Basic ${DID_API_KEY}`,
-            "Content-Type": "application/json",
-          },
           body: JSON.stringify({
+            streamId: this.streamId,
             script: {
               type: "audio",
               audio_url:
@@ -102,43 +110,43 @@ class MediaHandler {
             },
             session_id: this.sessionId,
           }),
-        }
-      );
+        });
+      } catch (error) {
+        console.log("post streams error", error);
+      }
     }
   }
 
   async destroy() {
-    await fetch(`${DID_API_URL}/talks/streams/${this.streamId}`, {
-      method: "DELETE",
-      headers: {
-        Authorization: `Basic ${DID_API_KEY}`,
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({ session_id: this.sessionId }),
-    });
+    try {
+      axios.delete(`${API_URL}/stream/${this.streamId}`, {
+        method: "DELETE",
+        body: JSON.stringify({ session_id: this.sessionId }),
+      });
+    } catch (error) {}
 
     this.stopAllStreams();
     this.closePC();
   }
 
   onIceCandidate(event) {
-    console.log("onIceCandidate", event);
     if (event.candidate) {
       const { candidate, sdpMid, sdpMLineIndex } = event.candidate;
 
-      fetch(`${DID_API_URL}/talks/streams/${this.streamId}/ice`, {
-        method: "POST",
-        headers: {
-          Authorization: `Basic ${DID_API_KEY}`,
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          candidate,
-          sdpMid,
-          sdpMLineIndex,
-          session_id: this.sessionId,
-        }),
-      });
+      try {
+        axios.post(`${API_URL}/ice`, {
+          method: "POST",
+          body: JSON.stringify({
+            candidate,
+            sdpMid,
+            sdpMLineIndex,
+            session_id: this.sessionId,
+            streamId: this.streamId,
+          }),
+        });
+      } catch (error) {
+        console.log("post ice error", error);
+      }
     }
   }
   onIceConnectionStateChange() {
@@ -252,8 +260,9 @@ class MediaHandler {
   }
 
   playIdleVideo() {
+    console.log("playIdleVideo");
     this.talkVideo.srcObject = undefined;
-    this.talkVideo.src = "or_idle.mp4";
+    this.talkVideo.src = "/idle_a.mp4";
     this.talkVideo.loop = true;
   }
 
