@@ -16,25 +16,27 @@ interface MediaUIProps {
 const MediaUI: React.FC<MediaUIProps> = ({ mediaConfigs }) => {
   // Assume the first config is the active config initially
   const [activeConfigIndex, setActiveConfigIndex] = useState(0);
-  const mediaHandlerRef = useRef(
-    new MediaHandler(mediaConfigs[activeConfigIndex])
-  );
+  let mediaHandlerRef = useRef<MediaHandler | null>(null);
+
+  useEffect(() => {
+    mediaHandlerRef.current = new MediaHandler(mediaConfigs[activeConfigIndex]);
+  }, [mediaConfigs, activeConfigIndex]);
 
   const onConnect = () => {
-    mediaHandlerRef.current.connect();
+    mediaHandlerRef?.current?.connect();
   };
 
   const onPlayVideo = () => {
-    mediaHandlerRef.current.playVideo();
+    mediaHandlerRef?.current?.playVideo();
   };
 
   const onDestroy = () => {
-    mediaHandlerRef.current.destroy();
+    mediaHandlerRef?.current?.destroy();
   };
 
   return (
     <div>
-      <video id="talk-video" playsInline />
+      <video id="talk-video" playsInline width="400" height="400" autoPlay />
       <button id="connect-button" onClick={onConnect}>
         Connect
       </button>
