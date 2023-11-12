@@ -33,6 +33,8 @@ class MediaHandler {
     this.stopAllStreams = this.stopAllStreams.bind(this);
     this.closePC = this.closePC.bind(this);
     this.fetchWithRetries = this.fetchWithRetries.bind(this);
+    this.onConnectionStateChange = this.onConnectionStateChange.bind(this);
+    this.onSignalingStateChange = this.onSignalingStateChange.bind(this);
   }
 
   async connect() {
@@ -46,19 +48,20 @@ class MediaHandler {
     this.stopAllStreams();
     this.closePC();
 
-    let sessionResponse;
-    try {
-      sessionResponse = await axios.post(`${API_URL}/talks-stream`);
-    } catch (error) {
-      console.log("talks-stream error", error);
-    }
+    const sessionResponse = await this.fetchWithRetries(
+      `${API_URL}/talks-stream`,
+      {
+        method: "POST",
+      }
+    );
 
     const {
       id: newStreamId,
       offer,
       ice_servers: iceServers,
       session_id: newSessionId,
-    } = await sessionResponse.data;
+    } = await sessionResponse.json();
+
     this.streamId = newStreamId;
     this.sessionId = newSessionId;
 
@@ -77,9 +80,9 @@ class MediaHandler {
     let sdpResponse;
 
     try {
-      sdpResponse = await axios.post(`${API_URL}/ice`, {
-        answer: this.sessionClientAnswer,
-        session_id: this.sessionId,
+      sdpResponse = await axios.post(`${API_URL}/sdp`, {
+        sessionClientAnswer: this.sessionClientAnswer,
+        sessionId: this.sessionId,
         streamId: this.streamId,
       });
     } catch (error) {}
@@ -93,17 +96,20 @@ class MediaHandler {
     ) {
       let talkResponse;
       try {
-        talkResponse = await axios.post(`${API_URL}/streams`, {
-          streamId: this.streamId,
-          script: {
-            type: "audio",
-            audio_url: this.audioUrl,
-          },
-          driver_url: "bank://lively/",
-          config: {
-            stitch: true,
-          },
-          sessionId: this.sessionId,
+        talkResponse = await this.fetchWithRetries(`${API_URL}/streams`, {
+          method: "POST",
+          body: JSON.stringify({
+            streamId: this.streamId,
+            script: {
+              type: "audio",
+              audio_url: this.audioUrl,
+            },
+            driver_url: "bank://lively/",
+            config: {
+              stitch: true,
+            },
+            sessionId: this.sessionId,
+          }),
         });
       } catch (error) {
         console.log("post streams error", error);
@@ -126,6 +132,16 @@ class MediaHandler {
     this.closePC();
   }
 
+  onIceGatheringStateChange = () => {
+    const iceGatheringStatusLabel = document.getElementById(
+      "ice-gathering-status-label"
+    );
+
+    iceGatheringStatusLabel.innerText = this.peerConnection.iceGatheringState;
+    iceGatheringStatusLabel.className =
+      "iceGatheringState-" + this.peerConnection.iceGatheringState;
+  };
+
   onIceCandidate(event) {
     if (event.candidate) {
       const { candidate, sdpMid, sdpMLineIndex } = event.candidate;
@@ -135,7 +151,7 @@ class MediaHandler {
           candidate,
           sdpMid,
           sdpMLineIndex,
-          session_id: this.sessionId,
+          sessionId: this.sessionId,
           streamId: this.streamId,
         });
       } catch (error) {
@@ -144,6 +160,12 @@ class MediaHandler {
     }
   }
   onIceConnectionStateChange() {
+    const iceStatusLabel = document.getElementById("ice-status-label");
+    if (!iceStatusLabel) return;
+
+    iceStatusLabel.innerText = this.peerConnection.iceConnectionState;
+    iceStatusLabel.className =
+      "iceConnectionState-" + this.peerConnection.iceConnectionState;
     if (
       this.peerConnection.iceConnectionState === "failed" ||
       this.peerConnection.iceConnectionState === "closed"
@@ -153,7 +175,29 @@ class MediaHandler {
     }
   }
 
+  onConnectionStateChange() {
+    const peerStatusLabel = document.getElementById("peer-status-label");
+    // not supported in firefox
+    peerStatusLabel.innerText = this.peerConnection.connectionState;
+    peerStatusLabel.className =
+      "peerConnectionState-" + this.peerConnection.connectionState;
+  }
+  onSignalingStateChange() {
+    const signalingStatusLabel = document.getElementById(
+      "signaling-status-label"
+    );
+    if (!signalingStatusLabel) return;
+
+    signalingStatusLabel.innerText = this.peerConnection.signalingState;
+    signalingStatusLabel.className =
+      "signalingState-" + this.peerConnection?.signalingState;
+  }
+
   onVideoStatusChange(videoIsPlaying, stream) {
+    const streamingStatusLabel = document.getElementById(
+      "streaming-status-label"
+    );
+
     let status;
     if (videoIsPlaying) {
       status = "streaming";
@@ -163,6 +207,8 @@ class MediaHandler {
       status = "empty";
       this.playIdleVideo();
     }
+    streamingStatusLabel.innerText = status;
+    streamingStatusLabel.className = "streamingState-" + status;
   }
 
   onTrack(event) {
@@ -302,7 +348,7 @@ class MediaHandler {
     }
   }
 
-  async fetchWithRetries(url, options, retries = 1) {
+  fetchWithRetries = async (url, options, retries = 1) => {
     const maxRetryCount = 3;
     const maxDelaySec = 4;
 
@@ -324,7 +370,7 @@ class MediaHandler {
         throw new Error(`Max retries exceeded. error: ${err}`);
       }
     }
-  }
+  };
 }
 
 export default MediaHandler;
