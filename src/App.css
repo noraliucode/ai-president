@@ -67,6 +67,8 @@
   border: 1px solid black;
   display: flex;
   align-items: center;
+  position: absolute;
+  bottom: 30px;
 }
 
 .custom-progress-bar {
@@ -109,5 +111,41 @@
 @keyframes marquee {
   from { transform: translateX(100%); }
   to { transform: translateX(-100%); }
+}
+
+.peerConnectionState-new {
+  color: cornflowerblue;
+}
+.peerConnectionState-connecting {
+  color: orange;
+}
+.peerConnectionState-connected {
+  color: green;
+}
+.peerConnectionState-disconnected,
+.peerConnectionState-closed,
+.peerConnectionState-failed {
+  color: red;
+}
+
+.iceConnectionState-new {
+  color: cornflowerblue;
+}
+.iceConnectionState-checking {
+  color: orange;
+}
+.iceConnectionState-connected,
+.iceConnectionState-completed {
+  color: green;
+}
+.peerConnectionState-disconnected,
+.peerConnectionState-closed,
+.peerConnectionState-failed {
+  color: red;
+}
+#status {
+  background: white;
+  border-radius: 10px;
+  padding: 5px;
 }
 
