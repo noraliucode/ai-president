@@ -98,6 +98,9 @@ class MediaHandler {
       try {
         talkResponse = await this.fetchWithRetries(`${API_URL}/streams`, {
           method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
           body: JSON.stringify({
             streamId: this.streamId,
             script: {
