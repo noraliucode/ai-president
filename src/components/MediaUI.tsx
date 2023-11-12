@@ -21,7 +21,14 @@ const MediaUI: React.FC<MediaUIProps> = ({ mediaConfigs }) => {
   const elementId = mediaConfigs[activeConfigIndex].elementId;
 
   useEffect(() => {
-    mediaHandlerRef.current = new MediaHandler(mediaConfigs[activeConfigIndex]);
+    if (
+      document.getElementById(elementId) &&
+      document.getElementById("ice-gathering-status-label")
+    ) {
+      mediaHandlerRef.current = new MediaHandler(
+        mediaConfigs[activeConfigIndex]
+      );
+    }
   }, [mediaConfigs, activeConfigIndex]);
 
   const onConnect = () => {
@@ -48,6 +55,19 @@ const MediaUI: React.FC<MediaUIProps> = ({ mediaConfigs }) => {
       <button id="destroy-button" onClick={onDestroy}>
         Destroy
       </button>
+
+      <div id="status">
+        ICE gathering status: <label id="ice-gathering-status-label"></label>
+        <br />
+        ICE status: <label id="ice-status-label"></label>
+        <br />
+        Peer connection status: <label id="peer-status-label"></label>
+        <br />
+        Signaling status: <label id="signaling-status-label"></label>
+        <br />
+        Streaming status: <label id="streaming-status-label"></label>
+        <br />
+      </div>
     </div>
   );
 };
