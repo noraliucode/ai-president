@@ -5,9 +5,9 @@ const API_URL = process.env.REACT_APP_API_URL;
 
 class MediaHandler {
   constructor(mediaConfig) {
-    const { elementId, audioUrl, video } = mediaConfig;
+    const { elementId, audioUrl, idleVideo } = mediaConfig;
     this.audioUrl = audioUrl;
-    this.video = video;
+    this.idleVideo = idleVideo;
     this.talkVideo = document.getElementById(elementId);
     this.mediaConfig = mediaConfig;
     this.peerConnection = null;
@@ -48,9 +48,7 @@ class MediaHandler {
 
     let sessionResponse;
     try {
-      sessionResponse = await axios.post(`${API_URL}/talks-stream`, {
-        method: "POST",
-      });
+      sessionResponse = await axios.post(`${API_URL}/talks-stream`);
     } catch (error) {
       console.log("talks-stream error", error);
     }
@@ -80,12 +78,9 @@ class MediaHandler {
 
     try {
       sdpResponse = await axios.post(`${API_URL}/ice`, {
-        method: "POST",
-        body: JSON.stringify({
-          answer: this.sessionClientAnswer,
-          session_id: this.sessionId,
-          streamId: this.streamId,
-        }),
+        answer: this.sessionClientAnswer,
+        session_id: this.sessionId,
+        streamId: this.streamId,
       });
     } catch (error) {}
   }
@@ -102,7 +97,7 @@ class MediaHandler {
           streamId: this.streamId,
           script: {
             type: "audio",
-            audio_url: "https://archive.org/download/11yiyi/11yiyi.mp3",
+            audio_url: this.audioUrl,
           },
           driver_url: "bank://lively/",
           config: {
@@ -118,9 +113,12 @@ class MediaHandler {
 
   async destroy() {
     try {
+      // In Axios, the second parameter in a delete request is not the request body (like in post, put, or patch), but the configuration object
+      // https://stackoverflow.com/questions/74950058/empty-request-body-in-delete-method-node-ls-react-axios#:~:text=If%20we%20review%20the%20API,as%20it%20is%20with%20post
       axios.delete(`${API_URL}/stream/${this.streamId}`, {
-        method: "DELETE",
-        body: JSON.stringify({ session_id: this.sessionId }),
+        data: {
+          sessionId: this.sessionId,
+        },
       });
     } catch (error) {}
 
@@ -134,14 +132,11 @@ class MediaHandler {
 
       try {
         axios.post(`${API_URL}/ice`, {
-          method: "POST",
-          body: JSON.stringify({
-            candidate,
-            sdpMid,
-            sdpMLineIndex,
-            session_id: this.sessionId,
-            streamId: this.streamId,
-          }),
+          candidate,
+          sdpMid,
+          sdpMLineIndex,
+          session_id: this.sessionId,
+          streamId: this.streamId,
         });
       } catch (error) {
         console.log("post ice error", error);
@@ -184,8 +179,8 @@ class MediaHandler {
     if (!event.track) return;
 
     this.statsIntervalId = setInterval(async () => {
-      const stats = await this.peerConnection.getStats(event.track);
-      stats.forEach((report) => {
+      const stats = await this.peerConnection?.getStats(event.track);
+      stats?.forEach((report) => {
         if (report.type === "inbound-rtp" && report.mediaType === "video") {
           const videoStatusChanged =
             this.videoIsPlaying !==
@@ -261,7 +256,7 @@ class MediaHandler {
   playIdleVideo() {
     console.log("playIdleVideo");
     this.talkVideo.srcObject = undefined;
-    this.talkVideo.src = this.video;
+    this.talkVideo.src = this.idleVideo;
     this.talkVideo.loop = true;
   }
 
