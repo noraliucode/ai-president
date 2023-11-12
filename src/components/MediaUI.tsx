@@ -5,7 +5,7 @@ import MediaHandler from "./MediaHandler";
 // Define the MediaConfig type
 interface MediaConfig {
   audioUrl: string;
-  video: string;
+  idleVideo: string;
   elementId: string;
 }
 
@@ -18,6 +18,7 @@ const MediaUI: React.FC<MediaUIProps> = ({ mediaConfigs }) => {
   // Assume the first config is the active config initially
   const [activeConfigIndex, setActiveConfigIndex] = useState(0);
   let mediaHandlerRef = useRef<MediaHandler | null>(null);
+  const elementId = mediaConfigs[activeConfigIndex].elementId;
 
   useEffect(() => {
     mediaHandlerRef.current = new MediaHandler(mediaConfigs[activeConfigIndex]);
@@ -37,7 +38,7 @@ const MediaUI: React.FC<MediaUIProps> = ({ mediaConfigs }) => {
 
   return (
     <div>
-      <video id="talk-video" playsInline width="400" height="400" autoPlay />
+      <video id={elementId} playsInline width="400" height="400" autoPlay />
       <button id="connect-button" onClick={onConnect}>
         Connect
       </button>

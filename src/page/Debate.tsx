@@ -4,8 +4,15 @@ import MediaUI from "../components/MediaUI";
 const mediaConfigs = [
   {
     audioUrl: "https://archive.org/download/11yiyi/11yiyi.mp3",
-    video: "idle_a.mp4",
+    idleVideo: "idle_a.mp4",
     elementId: "talk-video",
+  },
+];
+const mediaConfigs2 = [
+  {
+    audioUrl: "https://archive.org/download/11yiyi/11yiyi.mp3",
+    idleVideo: "idle_b.mp4",
+    elementId: "talk-video-2",
   },
 ];
 
@@ -37,10 +44,7 @@ const MyComponent: React.FC = () => {
           }}
         >
           <span className="marquee-content">
-            This is your marquee text scrolling across the screen. This is your
-            marquee text scrolling across the screen. This is your marquee text
-            scrolling across the screen. This is your marquee text scrolling
-            across the screen.
+            以下內容純屬虛構，認真就輸了。以下內容純屬虛構，認真就輸了。以下內容純屬虛構，認真就輸了。以下內容純屬虛構，認真就輸了。以下內容純屬虛構，認真就輸了。以下內容純屬虛構，認真就輸了。
           </span>
         </div>
       </div>
@@ -56,13 +60,22 @@ const MyComponent: React.FC = () => {
         <div className="card">
           <MediaUI mediaConfigs={mediaConfigs} />
         </div>
-        <div className="card"></div>
+        <div className="card">
+          <MediaUI mediaConfigs={mediaConfigs2} />
+        </div>
         <div className="card"></div>
       </div>
 
       {/* Title */}
-      <h2 style={{ color: "white", textAlign: "center", marginBottom: "20px" }}>
-        Your Title Here
+      <h2
+        style={{
+          color: "white",
+          textAlign: "center",
+          marginBottom: "20px",
+          marginTop: "200px",
+        }}
+      >
+        第一階段 申論
       </h2>
 
       {/* Custom Progress Bar */}
