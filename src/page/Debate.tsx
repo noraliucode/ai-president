@@ -1,3 +1,4 @@
+// Debate.tsx
 import React from "react";
 import MediaUI from "../components/MediaUI";
 
@@ -93,8 +94,6 @@ const MyComponent: React.FC = () => {
           style={{ width: `${greenPercentage}%`, background: "green" }}
         ></div>
       </div>
-
-      {/* You can add other components or elements below this line as needed ... */}
     </div>
   );
 };
