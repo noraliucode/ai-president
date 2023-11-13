@@ -17,27 +17,9 @@ class MediaHandler {
     this.statsIntervalId = null;
     this.videoIsPlaying = undefined;
     this.lastBytesReceived = undefined;
-
-    // not sure if we need to bind all these functions, can be removed if not needed
-    this.connect = this.connect.bind(this);
-    this.playVideo = this.playVideo.bind(this);
-    this.destroy = this.destroy.bind(this);
-    this.onIceCandidate = this.onIceCandidate.bind(this);
-    this.onIceConnectionStateChange =
-      this.onIceConnectionStateChange.bind(this);
-    this.onVideoStatusChange = this.onVideoStatusChange.bind(this);
-    this.onTrack = this.onTrack.bind(this);
-    this.createPeerConnection = this.createPeerConnection.bind(this);
-    this.setVideoElement = this.setVideoElement.bind(this);
-    this.playIdleVideo = this.playIdleVideo.bind(this);
-    this.stopAllStreams = this.stopAllStreams.bind(this);
-    this.closePC = this.closePC.bind(this);
-    this.fetchWithRetries = this.fetchWithRetries.bind(this);
-    this.onConnectionStateChange = this.onConnectionStateChange.bind(this);
-    this.onSignalingStateChange = this.onSignalingStateChange.bind(this);
   }
 
-  async connect() {
+  connect = async () => {
     if (
       this.peerConnection &&
       this.peerConnection.connectionState === "connected"
@@ -86,9 +68,9 @@ class MediaHandler {
         streamId: this.streamId,
       });
     } catch (error) {}
-  }
+  };
 
-  async playVideo() {
+  playVideo = async () => {
     // connectionState not supported in firefox
     if (
       this.peerConnection?.signalingState === "stable" ||
@@ -118,9 +100,9 @@ class MediaHandler {
         console.log("post streams error", error);
       }
     }
-  }
+  };
 
-  async destroy() {
+  destroy = async () => {
     try {
       // In Axios, the second parameter in a delete request is not the request body (like in post, put, or patch), but the configuration object
       // https://stackoverflow.com/questions/74950058/empty-request-body-in-delete-method-node-ls-react-axios#:~:text=If%20we%20review%20the%20API,as%20it%20is%20with%20post
@@ -133,7 +115,7 @@ class MediaHandler {
 
     this.stopAllStreams();
     this.closePC();
-  }
+  };
 
   onIceGatheringStateChange = () => {
     const iceGatheringStatusLabel = document.getElementById(
@@ -145,7 +127,7 @@ class MediaHandler {
       "iceGatheringState-" + this.peerConnection.iceGatheringState;
   };
 
-  onIceCandidate(event) {
+  onIceCandidate = (event) => {
     if (event.candidate) {
       const { candidate, sdpMid, sdpMLineIndex } = event.candidate;
 
@@ -161,8 +143,8 @@ class MediaHandler {
         console.log("post ice error", error);
       }
     }
-  }
-  onIceConnectionStateChange() {
+  };
+  onIceConnectionStateChange = () => {
     const iceStatusLabel = document.getElementById("ice-status-label");
     if (!iceStatusLabel) return;
 
@@ -176,16 +158,16 @@ class MediaHandler {
       this.stopAllStreams();
       this.closePC();
     }
-  }
+  };
 
-  onConnectionStateChange() {
+  onConnectionStateChange = () => {
     const peerStatusLabel = document.getElementById("peer-status-label");
     // not supported in firefox
     peerStatusLabel.innerText = this.peerConnection.connectionState;
     peerStatusLabel.className =
       "peerConnectionState-" + this.peerConnection.connectionState;
-  }
-  onSignalingStateChange() {
+  };
+  onSignalingStateChange = () => {
     const signalingStatusLabel = document.getElementById(
       "signaling-status-label"
     );
@@ -194,9 +176,9 @@ class MediaHandler {
     signalingStatusLabel.innerText = this.peerConnection.signalingState;
     signalingStatusLabel.className =
       "signalingState-" + this.peerConnection?.signalingState;
-  }
+  };
 
-  onVideoStatusChange(videoIsPlaying, stream) {
+  onVideoStatusChange = (videoIsPlaying, stream) => {
     const streamingStatusLabel = document.getElementById(
       "streaming-status-label"
     );
@@ -212,9 +194,9 @@ class MediaHandler {
     }
     streamingStatusLabel.innerText = status;
     streamingStatusLabel.className = "streamingState-" + status;
-  }
+  };
 
-  onTrack(event) {
+  onTrack = (event) => {
     /**
      * The following code is designed to provide information about wether currently there is data
      * that's being streamed - It does so by periodically looking for changes in total stream data size
@@ -243,9 +225,9 @@ class MediaHandler {
         }
       });
     }, 500);
-  }
+  };
 
-  async createPeerConnection(offer, iceServers) {
+  createPeerConnection = async (offer, iceServers) => {
     if (!this.peerConnection) {
       this.peerConnection = new RTCPeerConnection({ iceServers });
       this.peerConnection.addEventListener(
@@ -286,9 +268,9 @@ class MediaHandler {
     console.log("set local sdp OK");
 
     return sessionClientAnswer;
-  }
+  };
 
-  setVideoElement(stream) {
+  setVideoElement = (stream) => {
     if (!stream) return;
     this.talkVideo.srcObject = stream;
     this.talkVideo.loop = false;
@@ -300,24 +282,24 @@ class MediaHandler {
         .then((_) => {})
         .catch((e) => {});
     }
-  }
+  };
 
-  playIdleVideo() {
+  playIdleVideo = () => {
     console.log("playIdleVideo");
     this.talkVideo.srcObject = undefined;
     this.talkVideo.src = this.idleVideo;
     this.talkVideo.loop = true;
-  }
+  };
 
-  stopAllStreams() {
+  stopAllStreams = () => {
     if (this.talkVideo.srcObject) {
       console.log("stopping video streams");
       this.talkVideo.srcObject.getTracks().forEach((track) => track.stop());
       this.talkVideo.srcObject = null;
     }
-  }
+  };
 
-  closePC(pc = this.peerConnection) {
+  closePC = (pc = this.peerConnection) => {
     if (!pc) return;
     console.log("stopping peer connection");
     pc.close();
@@ -349,7 +331,7 @@ class MediaHandler {
     if (pc === this.peerConnection) {
       this.peerConnection = null;
     }
-  }
+  };
 
   fetchWithRetries = async (url, options, retries = 1) => {
     const maxRetryCount = 3;
