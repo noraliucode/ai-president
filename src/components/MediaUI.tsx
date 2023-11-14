@@ -1,60 +1,64 @@
 // File: MediaUI.jsx
-import React, { useEffect, useRef, useState } from "react";
+import React, { useEffect, useRef } from "react";
 import MediaHandler from "./MediaHandler";
 
 // Define the MediaConfig type
 interface MediaConfig {
-  audioUrl: string;
+  url: string;
+  role: string;
   idleVideo: string;
-  elementId: string;
 }
 
 // Define the prop type for MediaUI
 interface MediaUIProps {
-  mediaConfigs: MediaConfig[];
+  mediaConfig: MediaConfig;
+  shouldConnect: boolean;
+  shouldPlayVideo: boolean;
+  shouldDestroy: boolean;
 }
 
-const MediaUI: React.FC<MediaUIProps> = ({ mediaConfigs }) => {
+const MediaUI: React.FC<MediaUIProps> = ({
+  mediaConfig,
+  shouldConnect,
+  shouldPlayVideo,
+  shouldDestroy,
+}) => {
   // Assume the first config is the active config initially
-  const [activeConfigIndex, setActiveConfigIndex] = useState(0);
-  let mediaHandlerRef = useRef<MediaHandler | null>(null);
-  const elementId = mediaConfigs[activeConfigIndex].elementId;
+  const mediaHandlerRef = useRef<MediaHandler | null>(null);
+  const elementId = mediaConfig.role;
 
   useEffect(() => {
-    if (
-      document.getElementById(elementId) &&
-      document.getElementById("ice-gathering-status-label")
-    ) {
-      mediaHandlerRef.current = new MediaHandler(
-        mediaConfigs[activeConfigIndex]
-      );
+    if (mediaHandlerRef.current) {
+      // Update only the audioUrl of the existing MediaHandler instance
+      mediaHandlerRef.current.updateAudioUrl(mediaConfig.url);
+    } else {
+      // Create a new MediaHandler instance if it doesn't exist
+      mediaHandlerRef.current = new MediaHandler(mediaConfig);
     }
-  }, [mediaConfigs, activeConfigIndex]);
+  }, [mediaHandlerRef]);
 
-  const onConnect = () => {
-    mediaHandlerRef?.current?.connect();
-  };
+  useEffect(() => {
+    if (shouldConnect && mediaHandlerRef.current) {
+      mediaHandlerRef.current.connect();
+    }
+  }, [shouldConnect]);
 
-  const onPlayVideo = () => {
-    mediaHandlerRef?.current?.playVideo();
-  };
+  useEffect(() => {
+    if (shouldPlayVideo && mediaHandlerRef.current) {
+      mediaHandlerRef.current.playVideo();
+    }
+  }, [shouldPlayVideo]);
 
-  const onDestroy = () => {
-    mediaHandlerRef?.current?.destroy();
-  };
+  useEffect(() => {
+    if (shouldDestroy && mediaHandlerRef.current) {
+      mediaHandlerRef.current.destroy();
+      mediaHandlerRef.current = null;
+    }
+  }, [shouldDestroy]);
 
   return (
     <div>
       <video id={elementId} playsInline width="400" height="400" autoPlay />
-      <button id="connect-button" onClick={onConnect}>
-        Connect
-      </button>
-      <button id="play-video-button" onClick={onPlayVideo}>
-        Play Video
-      </button>
-      <button id="destroy-button" onClick={onDestroy}>
-        Destroy
-      </button>
 
       <div id="status">
         ICE gathering status: <label id="ice-gathering-status-label"></label>

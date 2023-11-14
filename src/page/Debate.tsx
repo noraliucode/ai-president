@@ -1,23 +1,95 @@
 // Debate.tsx
-import React from "react";
+import React, { useEffect, useState } from "react";
 import MediaUI from "../components/MediaUI";
+import config from "./conversation.json";
+import tesConfig from "./testConversation.json";
 
-const mediaConfigs = [
-  {
-    audioUrl: "https://archive.org/download/11yiyi/11yiyi.mp3",
-    idleVideo: "idle_a.mp4",
-    elementId: "talk-video",
-  },
-];
-const mediaConfigs2 = [
-  {
-    audioUrl: "https://archive.org/download/11yiyi/11yiyi.mp3",
-    idleVideo: "idle_b.mp4",
-    elementId: "talk-video-2",
-  },
-];
+// const mediaConfigs = config.conversation;
+const mediaConfigs = tesConfig.conversation;
 
-const MyComponent: React.FC = () => {
+const Debate: React.FC = () => {
+  const [currentConfigIndex, setCurrentConfigIndex] = useState(-1);
+  const [mediaStates, setMediaStates] = useState({
+    ho: {
+      url: null,
+      shouldPlay: false,
+      shouldConnect: false,
+      shouldDestroy: false,
+    },
+    kp: {
+      url: null,
+      shouldPlay: false,
+      shouldConnect: false,
+      shouldDestroy: false,
+    },
+    lai: {
+      url: null,
+      shouldPlay: false,
+      shouldConnect: false,
+      shouldDestroy: false,
+    },
+  });
+
+  console.log("mediaStates >>", mediaStates);
+
+  // Function to update the URL and play state for a specific role
+  const updateMediaStateForRole = (role: string, changes: any) => {
+    setMediaStates((prev) => ({
+      ...prev,
+      // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+      // @ts-ignore
+      [role]: { ...prev[role], ...changes },
+    }));
+  };
+
+  useEffect(() => {
+    if (currentConfigIndex < 0 || currentConfigIndex >= mediaConfigs.length) {
+      return;
+    }
+
+    const currentConfig = mediaConfigs[currentConfigIndex];
+    updateMediaStateForRole(currentConfig.role, {
+      url: currentConfig.url,
+      shouldPlay: true,
+    });
+
+    const timer = setTimeout(() => {
+      updateMediaStateForRole(currentConfig.role, { shouldPlay: false });
+      setCurrentConfigIndex((currentIndex) => currentIndex + 1);
+    }, currentConfig.duration * 1000);
+
+    return () => clearTimeout(timer);
+  }, [currentConfigIndex]);
+
+  const handleConnectAll = () => {
+    Object.keys(mediaStates).forEach((role) =>
+      updateMediaStateForRole(role, { shouldConnect: true })
+    );
+    // Optionally reset the state
+    setTimeout(() => {
+      Object.keys(mediaStates).forEach((role) =>
+        updateMediaStateForRole(role, { shouldConnect: false })
+      );
+    }, 1000);
+  };
+
+  const handleDestroyAll = () => {
+    Object.keys(mediaStates).forEach((role) =>
+      updateMediaStateForRole(role, { shouldDestroy: true })
+    );
+    // Optionally reset the state
+    setTimeout(() => {
+      Object.keys(mediaStates).forEach((role) =>
+        updateMediaStateForRole(role, { shouldDestroy: false })
+      );
+    }, 1000);
+  };
+
+  const handleStartDebate = () => {
+    // Step 2: Add the function
+    setCurrentConfigIndex(0);
+  };
+
   // Adjust these percentages for your progress bar
   const bluePercentage = 50;
   const whitePercentage = 30;
@@ -58,13 +130,24 @@ const MyComponent: React.FC = () => {
           marginBottom: "20px",
         }}
       >
-        <div className="card">
-          <MediaUI mediaConfigs={mediaConfigs} />
-        </div>
-        <div className="card">
-          <MediaUI mediaConfigs={mediaConfigs2} />
-        </div>
-        <div className="card"></div>
+        {Object.entries(mediaStates).map(
+          ([role, { url, shouldPlay, shouldConnect, shouldDestroy }]) => (
+            <div key={role} className="card">
+              <MediaUI
+                mediaConfig={{
+                  role,
+                  // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+                  // @ts-ignore
+                  url,
+                  idleVideo: `/idle_${role}.mp4`, // Assuming a naming convention for idle videos
+                }}
+                shouldPlayVideo={shouldPlay}
+                shouldConnect={shouldConnect}
+                shouldDestroy={shouldDestroy}
+              />
+            </div>
+          )
+        )}
       </div>
 
       {/* Title */}
@@ -78,9 +161,18 @@ const MyComponent: React.FC = () => {
       >
         第一階段 申論
       </h2>
+      <div
+        style={{
+          position: "absolute",
+        }}
+      >
+        <button onClick={handleConnectAll}>Connect All MediaUIs</button>
+        <button onClick={handleStartDebate}>Start Debate</button>
+        <button onClick={handleDestroyAll}>Destroy All MediaUIs</button>
+      </div>
 
       {/* Custom Progress Bar */}
-      <div className="custom-progress-container" style={{ width: "100%" }}>
+      {/* <div className="custom-progress-container" style={{ width: "100%" }}>
         <div
           className="custom-progress-bar"
           style={{ width: `${bluePercentage}%`, background: "blue" }}
@@ -93,9 +185,9 @@ const MyComponent: React.FC = () => {
           className="custom-progress-bar"
           style={{ width: `${greenPercentage}%`, background: "green" }}
         ></div>
-      </div>
+      </div> */}
     </div>
   );
 };
 
-export default MyComponent;
+export default Debate;

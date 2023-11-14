@@ -2,13 +2,18 @@
 import axios from "axios";
 
 const API_URL = process.env.REACT_APP_API_URL;
+const imgUrls = {
+  kp: "https://i.imgur.com/Ur9WbKC.jpg",
+  ho: "https://i.imgur.com/af9NDMe.png",
+  lai: "https://i.imgur.com/LSIN2Bl.png",
+};
 
 class MediaHandler {
   constructor(mediaConfig) {
-    const { elementId, audioUrl, idleVideo } = mediaConfig;
-    this.audioUrl = audioUrl;
+    const { role, url, idleVideo } = mediaConfig;
+    this.audioUrl = url;
     this.idleVideo = idleVideo;
-    this.talkVideo = document.getElementById(elementId);
+    this.talkVideo = document.getElementById(role);
     this.mediaConfig = mediaConfig;
     this.peerConnection = null;
     this.streamId = null;
@@ -34,6 +39,12 @@ class MediaHandler {
       `${API_URL}/talks-stream`,
       {
         method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          imgUrl: imgUrls[this.mediaConfig.role],
+        }),
       }
     );
 
@@ -87,7 +98,7 @@ class MediaHandler {
             streamId: this.streamId,
             script: {
               type: "audio",
-              audio_url: this.audioUrl,
+              audio_url: this.mediaConfig.url,
             },
             driver_url: "bank://lively/",
             config: {
@@ -355,6 +366,10 @@ class MediaHandler {
         throw new Error(`Max retries exceeded. error: ${err}`);
       }
     }
+  };
+
+  updateAudioUrl = (newAudioUrl) => {
+    this.audioUrl = newAudioUrl;
   };
 }
 
