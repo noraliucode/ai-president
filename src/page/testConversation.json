@@ -1,0 +1,19 @@
+{
+    "conversation": [
+        {
+            "role": "kp",
+            "url": "https://archive.org/download/2-kp-short/2_kp_short.mp3",
+            "duration": 10
+        },
+        {
+            "role": "ho",
+            "url": "https://archive.org/download/3-ho-shorter/3_ho_shorter.mp3",
+            "duration": 21
+        },
+        {
+            "role": "lai",
+            "url": "https://archive.org/download/4-lai-shorter/4_lai_shorter.mp3",
+            "duration": 16
+        }
+    ]
+}
