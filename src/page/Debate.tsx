@@ -163,7 +163,7 @@ const Debate: React.FC = () => {
       </h2>
       <div
         style={{
-          position: "absolute",
+          marginTop: "100vh",
         }}
       >
         <button onClick={handleConnectAll}>Connect All MediaUIs</button>
