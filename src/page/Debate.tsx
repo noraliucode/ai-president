@@ -122,6 +122,16 @@ const Debate: React.FC = () => {
         </div>
       </div>
 
+      <h2
+        style={{
+          color: "black",
+          marginBottom: "20px",
+          WebkitTextStroke: "1px #FFB866",
+        }}
+      >
+        2024 AI 大選猴子
+      </h2>
+
       {/* Cards */}
       <div
         style={{
@@ -172,7 +182,10 @@ const Debate: React.FC = () => {
       </div>
 
       {/* Custom Progress Bar */}
-      {/* <div className="custom-progress-container" style={{ width: "100%" }}>
+      <div
+        className="custom-progress-container"
+        style={{ width: "100%", border: "solid 1px #C2C2C2" }}
+      >
         <div
           className="custom-progress-bar"
           style={{ width: `${bluePercentage}%`, background: "blue" }}
@@ -185,7 +198,7 @@ const Debate: React.FC = () => {
           className="custom-progress-bar"
           style={{ width: `${greenPercentage}%`, background: "green" }}
         ></div>
-      </div> */}
+      </div>
     </div>
   );
 };
