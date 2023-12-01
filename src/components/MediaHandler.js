@@ -3,9 +3,9 @@ import axios from "axios";
 
 const API_URL = process.env.REACT_APP_API_URL;
 const imgUrls = {
-  kp: "https://i.imgur.com/Ur9WbKC.jpg",
-  ho: "https://i.imgur.com/af9NDMe.png",
-  lai: "https://i.imgur.com/LSIN2Bl.png",
+  kp: "https://i.imgur.com/CFOm6ew.jpg",
+  ho: "https://i.imgur.com/ckGFfnw.jpg",
+  lai: "https://i.imgur.com/7HPf6fA.jpg",
 };
 
 class MediaHandler {
@@ -98,7 +98,7 @@ class MediaHandler {
             streamId: this.streamId,
             script: {
               type: "audio",
-              audio_url: this.mediaConfig.url,
+              audio_url: this.audioUrl,
             },
             driver_url: "bank://lively/",
             config: {
