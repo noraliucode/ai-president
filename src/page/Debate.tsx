@@ -56,7 +56,7 @@ const Debate: React.FC = () => {
     const timer = setTimeout(() => {
       updateMediaStateForRole(currentConfig.role, { shouldPlay: false });
       setCurrentConfigIndex((currentIndex) => currentIndex + 1);
-    }, currentConfig.duration * 1000);
+    }, currentConfig.duration * 1000 + 1000); // 1000ms buffering
 
     return () => clearTimeout(timer);
   }, [currentConfigIndex]);
