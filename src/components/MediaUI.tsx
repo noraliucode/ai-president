@@ -25,17 +25,22 @@ const MediaUI: React.FC<MediaUIProps> = ({
 }) => {
   // Assume the first config is the active config initially
   const mediaHandlerRef = useRef<MediaHandler | null>(null);
+  const initializedRolesRef = useRef<Set<string>>(new Set());
   const elementId = mediaConfig.role;
 
   useEffect(() => {
-    if (mediaHandlerRef.current) {
-      // Update only the audioUrl of the existing MediaHandler instance
-      mediaHandlerRef.current.updateAudioUrl(mediaConfig.url);
-    } else {
-      // Create a new MediaHandler instance if it doesn't exist
+    const role = mediaConfig.role;
+
+    // Check if the MediaHandler instance for this role has already been created
+    if (!initializedRolesRef.current.has(role)) {
+      // Create a new MediaHandler instance if it hasn't been created for this role
       mediaHandlerRef.current = new MediaHandler(mediaConfig);
+      initializedRolesRef.current.add(role);
+    } else {
+      // Update only the audioUrl of the existing MediaHandler instance
+      mediaHandlerRef.current?.updateAudioUrl(mediaConfig.url);
     }
-  }, [mediaHandlerRef]);
+  }, [mediaConfig]);
 
   useEffect(() => {
     if (shouldConnect && mediaHandlerRef.current) {
