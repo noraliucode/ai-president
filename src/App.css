@@ -79,7 +79,6 @@
 .card {
   width: 30%;
   height: 250px; /* Increased height */
-  background: gray;
   border-radius: 10px;
 }
 
