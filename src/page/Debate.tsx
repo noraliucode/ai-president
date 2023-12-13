@@ -2,10 +2,8 @@
 import React, { useEffect, useState } from "react";
 import MediaUI from "../components/MediaUI";
 import config from "./conversation.json";
-import tesConfig from "./testConversation.json";
 
-// const mediaConfigs = config.conversation;
-const mediaConfigs = tesConfig.conversation;
+const mediaConfigs = config.conversation;
 
 const Debate: React.FC = () => {
   const [currentConfigIndex, setCurrentConfigIndex] = useState(-1);
@@ -53,10 +51,13 @@ const Debate: React.FC = () => {
       shouldPlay: true,
     });
 
+    const nextConfig = mediaConfigs[currentConfigIndex + 1];
+    const buffering = nextConfig?.role === currentConfig.role ? 0 : 1000;
+
     const timer = setTimeout(() => {
       updateMediaStateForRole(currentConfig.role, { shouldPlay: false });
       setCurrentConfigIndex((currentIndex) => currentIndex + 1);
-    }, currentConfig.duration * 1000 + 1000); // 1000ms buffering
+    }, currentConfig.duration * 1000 + buffering); // 1000ms buffering
 
     return () => clearTimeout(timer);
   }, [currentConfigIndex]);
@@ -89,11 +90,6 @@ const Debate: React.FC = () => {
     // Step 2: Add the function
     setCurrentConfigIndex(0);
   };
-
-  // Adjust these percentages for your progress bar
-  const bluePercentage = 50;
-  const whitePercentage = 30;
-  const greenPercentage = 20;
 
   return (
     <div
@@ -129,7 +125,7 @@ const Debate: React.FC = () => {
           WebkitTextStroke: "1px #FFB866",
         }}
       >
-        2024 AI 大選猴子
+        2024 AI 總統辯論
       </h2>
 
       {/* Cards */}
@@ -179,25 +175,6 @@ const Debate: React.FC = () => {
         <button onClick={handleConnectAll}>Connect All MediaUIs</button>
         <button onClick={handleStartDebate}>Start Debate</button>
         <button onClick={handleDestroyAll}>Destroy All MediaUIs</button>
-      </div>
-
-      {/* Custom Progress Bar */}
-      <div
-        className="custom-progress-container"
-        style={{ width: "100%", border: "solid 1px #C2C2C2" }}
-      >
-        <div
-          className="custom-progress-bar"
-          style={{ width: `${bluePercentage}%`, background: "blue" }}
-        ></div>
-        <div
-          className="custom-progress-bar"
-          style={{ width: `${whitePercentage}%`, background: "white" }}
-        ></div>
-        <div
-          className="custom-progress-bar"
-          style={{ width: `${greenPercentage}%`, background: "green" }}
-        ></div>
       </div>
     </div>
   );
