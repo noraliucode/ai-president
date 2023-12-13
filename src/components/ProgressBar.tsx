@@ -2,11 +2,7 @@ import React, { useEffect, useState } from "react";
 import { styled } from "@mui/material/styles";
 import PlusOneSnackbar from "./PlusOneSnackbar";
 
-type VotingProgressBarProps = {
-  bluePercentage: number;
-  whitePercentage: number;
-  greenPercentage: number;
-};
+const API_URL = process.env.REACT_APP_API_URL;
 
 interface PercentagesState {
   prevBlue: number | null;
@@ -56,7 +52,7 @@ const VotingProgressBar: React.FC = () => {
   useEffect(() => {
     const fetchChatData = async () => {
       try {
-        const response = await fetch("http://localhost:3000/chat"); // Fetch from your server endpoint
+        const response = await fetch(`${API_URL}/chat`); // Fetch from your server endpoint
         if (!response.ok) {
           throw new Error(`HTTP error! status: ${response.status}`);
         }
