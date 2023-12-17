@@ -28,8 +28,8 @@ const Countdown = () => {
     <Box
       sx={{
         position: "absolute",
-        right: "10px",
-        top: "80vh",
+        right: "33px",
+        top: "70vh",
       }}
     >
       <Typography
@@ -41,6 +41,7 @@ const Countdown = () => {
           padding: "0 10px",
           backgroundColor: "black",
           userSelect: "none",
+          borderRadius: "5px",
         }}
       >
         {`${minutes}:${seconds}`}
