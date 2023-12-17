@@ -17,14 +17,17 @@ interface PercentagesState {
 }
 
 const ProgressContainer = styled("div")({
-  width: "100%",
+  width: "95%",
   height: "20px",
   border: "solid 3px #C2C2C2",
-  position: "fixed",
-  top: "80vh",
+  position: "absolute",
+  top: "90vh",
   backgroundColor: "#E0E0E0",
-  display: "flex",
+  display: ["-webkit-box", "-webkit-flex", "-ms-flexbox", "flex"],
   overflow: "hidden",
+  left: "50%",
+  transform: "translateX(-50%)",
+  borderRadius: "10px",
 });
 
 const ProgressBar = styled("div")<{ width: number; bgColor: string }>(
