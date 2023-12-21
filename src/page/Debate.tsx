@@ -94,7 +94,7 @@ const Debate: React.FC = () => {
   return (
     <div
       style={{
-        backgroundImage: 'url("/bg.png")',
+        backgroundImage: 'url("/images/bg.png")',
         backgroundSize: "cover",
         backgroundRepeat: "no-repeat",
         backgroundPosition: "center",
@@ -102,22 +102,6 @@ const Debate: React.FC = () => {
         height: "100vh",
       }}
     >
-      {/* Marquee */}
-      <div className="sticky-marquee">
-        <div
-          style={{
-            overflow: "hidden",
-            color: "white",
-            padding: "5px",
-            marginBottom: "20px",
-          }}
-        >
-          <span className="marquee-content">
-            以下內容純屬虛構，認真就輸了。以下內容純屬虛構，認真就輸了。以下內容純屬虛構，認真就輸了。以下內容純屬虛構，認真就輸了。以下內容純屬虛構，認真就輸了。以下內容純屬虛構，認真就輸了。
-          </span>
-        </div>
-      </div>
-
       <h2
         style={{
           color: "black",
