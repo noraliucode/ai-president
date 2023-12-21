@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { styled } from "@mui/material/styles";
-import PlusOneSnackbar from "./PlusOneSnackbar";
+import PlusOne from "./PlusOne";
 
 const API_URL = process.env.REACT_APP_API_URL;
 
@@ -109,21 +109,15 @@ const VotingProgressBar: React.FC = () => {
         <ProgressBar width={percentages.green} bgColor="#00CC44" />
       </ProgressContainer>
 
-      <PlusOneSnackbar
-        open={percentages.showBluePlusOne}
-        handleClose={handleClose("Blue")}
-        message="Blue +1"
-      />
-      <PlusOneSnackbar
-        open={percentages.showWhitePlusOne}
-        handleClose={handleClose("White")}
-        message="White +1"
-      />
-      <PlusOneSnackbar
-        open={percentages.showGreenPlusOne}
-        handleClose={handleClose("Green")}
-        message="Green +1"
-      />
+      {percentages.showWhitePlusOne && (
+        <PlusOne src="/images/plus_1/white_plus_1.png" />
+      )}
+      {percentages.showBluePlusOne && (
+        <PlusOne src="/images/plus_1/blue_plus_1.png" />
+      )}
+      {percentages.showGreenPlusOne && (
+        <PlusOne src="/images/plus_1/green_plus_1.png" />
+      )}
     </>
   );
 };
