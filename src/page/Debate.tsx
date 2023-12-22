@@ -110,7 +110,7 @@ const Debate: React.FC = () => {
         backgroundRepeat: "no-repeat",
         backgroundPosition: "center",
         height: "100vh",
-        paddingTop: "40px",
+        padding: "40px 60px 0 60px",
       }}
     >
       <Grid
