@@ -187,6 +187,7 @@ const Debate: React.FC = () => {
           display: "flex",
           justifyContent: "space-between",
           marginBottom: "20px",
+          marginTop: "60px",
         }}
       >
         {Object.entries(mediaStates).map(
