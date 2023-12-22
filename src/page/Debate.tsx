@@ -11,12 +11,6 @@ const mediaConfigs = config.conversation;
 const Debate: React.FC = () => {
   const [currentConfigIndex, setCurrentConfigIndex] = useState(-1);
   const [mediaStates, setMediaStates] = useState({
-    ho: {
-      url: null,
-      shouldPlay: false,
-      shouldConnect: false,
-      shouldDestroy: false,
-    },
     kp: {
       url: null,
       shouldPlay: false,
@@ -24,6 +18,12 @@ const Debate: React.FC = () => {
       shouldDestroy: false,
     },
     lai: {
+      url: null,
+      shouldPlay: false,
+      shouldConnect: false,
+      shouldDestroy: false,
+    },
+    ho: {
       url: null,
       shouldPlay: false,
       shouldConnect: false,
