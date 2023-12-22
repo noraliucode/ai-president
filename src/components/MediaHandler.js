@@ -3,9 +3,9 @@ import axios from "axios";
 
 const API_URL = process.env.REACT_APP_API_URL;
 const imgUrls = {
-  kp: "https://i.imgur.com/CFOm6ew.jpg",
-  ho: "https://i.imgur.com/ckGFfnw.jpg",
-  lai: "https://i.imgur.com/7HPf6fA.jpg",
+  kp: "https://i.imgur.com/MqCVLk2.png",
+  ho: "https://i.imgur.com/RoLdzEF.png",
+  lai: "https://i.imgur.com/MsGYvGy.jpg",
 };
 
 class MediaHandler {
