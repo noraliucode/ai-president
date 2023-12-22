@@ -119,33 +119,34 @@ const ProgressBars = () => {
   }, []);
 
   return (
-    <Box>
-      <ProgressBar
-        label="侯侯 GPT"
-        value={percentages.blue}
-        barColor="#9093FF"
-      />
-      <ProgressBar
-        label="柯柯 GPT"
-        value={percentages.white}
-        barColor="#F7F975"
-      />
-      <ProgressBar
-        label="賴賴 GPT"
-        value={percentages.green}
-        barColor="#FF9DEF"
-      />
-
-      {percentages.showWhitePlusOne && (
-        <PlusOne src="/images/plus_1/white_plus_1.png" />
-      )}
-      {percentages.showBluePlusOne && (
-        <PlusOne src="/images/plus_1/blue_plus_1.png" />
-      )}
-      {percentages.showGreenPlusOne && (
-        <PlusOne src="/images/plus_1/green_plus_1.png" />
-      )}
-    </Box>
+    <>
+      <Box>
+        <ProgressBar
+          label="侯侯 GPT"
+          value={percentages.blue}
+          barColor="#9093FF"
+        />
+        <ProgressBar
+          label="柯柯 GPT"
+          value={percentages.white}
+          barColor="#F7F975"
+        />
+        <ProgressBar
+          label="賴賴 GPT"
+          value={percentages.green}
+          barColor="#FF9DEF"
+        />
+        {percentages.showWhitePlusOne && (
+          <PlusOne src="/images/plus_1/white_plus_1.png" position="left" />
+        )}
+        {percentages.showBluePlusOne && (
+          <PlusOne src="/images/plus_1/blue_plus_1.png" position="right" />
+        )}
+        {percentages.showGreenPlusOne && (
+          <PlusOne src="/images/plus_1/green_plus_1.png" position="center" />
+        )}
+      </Box>
+    </>
   );
 };
 
