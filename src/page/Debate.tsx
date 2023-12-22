@@ -7,6 +7,7 @@ import { Typography } from "@mui/material";
 import ProgressBar from "../components/ProgressBars";
 import Countdown from "../components/Countdown";
 import Footer from "../components/Footer";
+import BlinkingElement from "../components/BlinkingElement";
 
 const mediaConfigs = config.conversation;
 
@@ -157,18 +158,21 @@ const Debate: React.FC = () => {
             >
               辯題
             </Typography>
-            <Typography
-              sx={{
-                fontSize: "2rem",
-                color: "white",
-                padding: "8px",
-                userSelect: "none",
-                textAlign: "center",
-                fontWeight: "bold",
-              }}
-            >
-              山道猴子
-            </Typography>
+            <>
+              <Typography
+                sx={{
+                  fontSize: "2rem",
+                  color: "white",
+                  padding: "8px",
+                  userSelect: "none",
+                  textAlign: "center",
+                  fontWeight: "bold",
+                }}
+              >
+                山道猴子
+              </Typography>
+              <BlinkingElement />
+            </>
           </div>
         </Grid>
         <Grid item xs={4}>
