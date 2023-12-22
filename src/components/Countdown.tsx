@@ -1,15 +1,24 @@
 import React, { useState, useEffect } from "react";
 import { Box, Typography } from "@mui/material";
 
-const Countdown = () => {
-  // To start with 10 minutes; convert 10 minutes to seconds
-  const [counter, setCounter] = useState(10 * 60);
+const Countdown = ({ duration }: { duration: number }) => {
+  const [counter, setCounter] = useState(Math.round(duration));
 
   useEffect(() => {
-    let timerId: string | number | NodeJS.Timer | undefined;
+    // Round the duration to avoid displaying decimals
+    setCounter(Math.round(duration));
+  }, [duration]);
+
+  useEffect(() => {
+    let timerId: NodeJS.Timer | undefined;
 
     if (counter > 0) {
-      timerId = setInterval(() => setCounter(counter - 1), 1000);
+      timerId = setInterval(
+        () => setCounter((prevCounter) => prevCounter - 1),
+        1000
+      );
+    } else {
+      clearInterval(timerId);
     }
 
     // Cleanup function to clear the interval

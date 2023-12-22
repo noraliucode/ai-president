@@ -5,6 +5,7 @@ import config from "./conversation.json";
 import Grid from "@mui/material/Grid";
 import { Typography } from "@mui/material";
 import ProgressBar from "../components/ProgressBars";
+import Countdown from "../components/Countdown";
 
 const mediaConfigs = config.conversation;
 
@@ -201,6 +202,13 @@ const Debate: React.FC = () => {
             </div>
           )
         )}
+        <Countdown
+          duration={
+            currentConfigIndex > -1
+              ? mediaConfigs[currentConfigIndex].duration
+              : 0
+          }
+        />
       </div>
 
       <div
