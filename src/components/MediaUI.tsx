@@ -72,7 +72,14 @@ const MediaUI: React.FC<MediaUIProps> = ({
 
   return (
     <div>
-      <video id={elementId} playsInline width="400" height="400" autoPlay />
+      <video
+        id={elementId}
+        playsInline
+        width="400"
+        height="400"
+        autoPlay
+        style={{ border: "2px solid white" }}
+      />
       <Box
         sx={{
           position: "absolute",
