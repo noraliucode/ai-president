@@ -1,6 +1,7 @@
 // File: MediaUI.jsx
 import React, { useEffect, useRef } from "react";
 import MediaHandler from "./MediaHandler";
+import { Box, Typography } from "@mui/material";
 
 // Define the MediaConfig type
 interface MediaConfig {
@@ -15,13 +16,21 @@ interface MediaUIProps {
   shouldConnect: boolean;
   shouldPlayVideo: boolean;
   shouldDestroy: boolean;
+  label: string;
 }
+
+const LABEL: { [key: string]: string } = {
+  lai: "賴賴",
+  ho: "侯侯",
+  kp: "柯柯",
+};
 
 const MediaUI: React.FC<MediaUIProps> = ({
   mediaConfig,
   shouldConnect,
   shouldPlayVideo,
   shouldDestroy,
+  label,
 }) => {
   // Assume the first config is the active config initially
   const mediaHandlerRef = useRef<MediaHandler | null>(null);
@@ -64,6 +73,30 @@ const MediaUI: React.FC<MediaUIProps> = ({
   return (
     <div>
       <video id={elementId} playsInline width="400" height="400" autoPlay />
+      <Box
+        sx={{
+          position: "absolute",
+          color: "black",
+          background: "white",
+          width: "162px",
+          height: "42px",
+          margin: "-45px 130px",
+        }}
+      >
+        <Typography
+          variant="body2"
+          sx={{
+            fontSize: "1.3rem",
+            color: "black",
+            userSelect: "none",
+            textAlign: "center",
+            fontWeight: "bold",
+            padding: "6px",
+          }}
+        >
+          {LABEL[label]} GPT
+        </Typography>
+      </Box>
 
       <div id="status">
         ICE gathering status: <label id="ice-gathering-status-label"></label>
