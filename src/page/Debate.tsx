@@ -6,6 +6,7 @@ import Grid from "@mui/material/Grid";
 import { Typography } from "@mui/material";
 import ProgressBar from "../components/ProgressBars";
 import Countdown from "../components/Countdown";
+import Footer from "../components/Footer";
 
 const mediaConfigs = config.conversation;
 
@@ -198,6 +199,7 @@ const Debate: React.FC = () => {
                 shouldPlayVideo={shouldPlay}
                 shouldConnect={shouldConnect}
                 shouldDestroy={shouldDestroy}
+                label={role}
               />
             </div>
           )
@@ -209,6 +211,7 @@ const Debate: React.FC = () => {
               : 0
           }
         />
+        <Footer />
       </div>
 
       <div
