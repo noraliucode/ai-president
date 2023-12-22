@@ -38,7 +38,7 @@ const Countdown = ({ duration }: { duration: number }) => {
       sx={{
         position: "absolute",
         right: "33px",
-        top: "70vh",
+        top: "80vh",
       }}
     >
       <Typography
