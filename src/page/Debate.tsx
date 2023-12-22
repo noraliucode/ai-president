@@ -10,6 +10,7 @@ const mediaConfigs = config.conversation;
 
 const Debate: React.FC = () => {
   const [currentConfigIndex, setCurrentConfigIndex] = useState(-1);
+  const [showVoting, setVoting] = useState(true);
   const [mediaStates, setMediaStates] = useState({
     kp: {
       url: null,
@@ -94,6 +95,10 @@ const Debate: React.FC = () => {
     setCurrentConfigIndex(0);
   };
 
+  const toggleVoting = () => {
+    setVoting(!showVoting);
+  };
+
   return (
     <div
       style={{
@@ -166,7 +171,7 @@ const Debate: React.FC = () => {
         </Grid>
         <Grid item xs={4}>
           {/* Third element goes here */}
-          <ProgressBar />
+          {showVoting && <ProgressBar />}
         </Grid>
       </Grid>
 
@@ -206,6 +211,7 @@ const Debate: React.FC = () => {
         <button onClick={handleConnectAll}>Connect All MediaUIs</button>
         <button onClick={handleStartDebate}>Start Debate</button>
         <button onClick={handleDestroyAll}>Destroy All MediaUIs</button>
+        <button onClick={toggleVoting}>Toggle voting bar</button>
       </div>
     </div>
   );
