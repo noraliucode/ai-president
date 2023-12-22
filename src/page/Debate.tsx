@@ -2,18 +2,16 @@
 import React, { useEffect, useState } from "react";
 import MediaUI from "../components/MediaUI";
 import config from "./conversation.json";
+import Grid from "@mui/material/Grid";
+import { Typography } from "@mui/material";
+import ProgressBar from "../components/ProgressBars";
 
 const mediaConfigs = config.conversation;
 
 const Debate: React.FC = () => {
   const [currentConfigIndex, setCurrentConfigIndex] = useState(-1);
+  const [showVoting, setVoting] = useState(true);
   const [mediaStates, setMediaStates] = useState({
-    ho: {
-      url: null,
-      shouldPlay: false,
-      shouldConnect: false,
-      shouldDestroy: false,
-    },
     kp: {
       url: null,
       shouldPlay: false,
@@ -21,6 +19,12 @@ const Debate: React.FC = () => {
       shouldDestroy: false,
     },
     lai: {
+      url: null,
+      shouldPlay: false,
+      shouldConnect: false,
+      shouldDestroy: false,
+    },
+    ho: {
       url: null,
       shouldPlay: false,
       shouldConnect: false,
@@ -91,42 +95,85 @@ const Debate: React.FC = () => {
     setCurrentConfigIndex(0);
   };
 
+  const toggleVoting = () => {
+    setVoting(!showVoting);
+  };
+
   return (
     <div
       style={{
-        backgroundImage: 'url("/bg.png")',
+        backgroundImage: 'url("/images/bg3.png")',
         backgroundSize: "cover",
         backgroundRepeat: "no-repeat",
         backgroundPosition: "center",
-        padding: "20px",
         height: "100vh",
+        paddingTop: "40px",
       }}
     >
-      {/* Marquee */}
-      <div className="sticky-marquee">
-        <div
+      <Grid
+        container
+        spacing={2}
+        justifyContent="space-evenly"
+        alignItems="flex-start"
+      >
+        <Grid item xs={4}>
+          <img
+            src="/images/logo.png"
+            alt="logo"
+            style={{
+              width: "100%",
+              height: "auto",
+              maxWidth: "300px",
+              marginLeft: "40px",
+            }}
+          />
+        </Grid>
+        <Grid
+          item
+          xs={4}
           style={{
-            overflow: "hidden",
-            color: "white",
-            padding: "5px",
-            marginBottom: "20px",
+            display: "flex",
+            justifyContent: "center",
+            alignItems: "center",
           }}
         >
-          <span className="marquee-content">
-            以下內容純屬虛構，認真就輸了。以下內容純屬虛構，認真就輸了。以下內容純屬虛構，認真就輸了。以下內容純屬虛構，認真就輸了。以下內容純屬虛構，認真就輸了。以下內容純屬虛構，認真就輸了。
-          </span>
-        </div>
-      </div>
-
-      <h2
-        style={{
-          color: "black",
-          marginBottom: "20px",
-          WebkitTextStroke: "1px #FFB866",
-        }}
-      >
-        2024 AI 總統辯論
-      </h2>
+          <div
+            style={{
+              backgroundImage: "url(/images/title_bg.png)",
+              backgroundSize: "cover",
+              width: "300px",
+              height: "100px",
+            }}
+          >
+            <Typography
+              sx={{
+                fontSize: "25px",
+                color: "black",
+                userSelect: "none",
+                textAlign: "center",
+              }}
+            >
+              辯題
+            </Typography>
+            <Typography
+              sx={{
+                fontSize: "2rem",
+                color: "white",
+                padding: "8px",
+                userSelect: "none",
+                textAlign: "center",
+                fontWeight: "bold",
+              }}
+            >
+              山道猴子
+            </Typography>
+          </div>
+        </Grid>
+        <Grid item xs={4}>
+          {/* Third element goes here */}
+          {showVoting && <ProgressBar />}
+        </Grid>
+      </Grid>
 
       {/* Cards */}
       <div
@@ -157,17 +204,6 @@ const Debate: React.FC = () => {
         )}
       </div>
 
-      {/* Title */}
-      <h2
-        style={{
-          color: "white",
-          textAlign: "center",
-          marginBottom: "20px",
-          marginTop: "200px",
-        }}
-      >
-        第一階段 申論
-      </h2>
       <div
         style={{
           marginTop: "100vh",
@@ -176,6 +212,7 @@ const Debate: React.FC = () => {
         <button onClick={handleConnectAll}>Connect All MediaUIs</button>
         <button onClick={handleStartDebate}>Start Debate</button>
         <button onClick={handleDestroyAll}>Destroy All MediaUIs</button>
+        <button onClick={toggleVoting}>Toggle voting bar</button>
       </div>
     </div>
   );
