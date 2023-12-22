@@ -69,7 +69,10 @@ const MediaUI: React.FC<MediaUIProps> = ({
 
   return (
     <div>
-      <video id={elementId} onEnded={onVideoEnded} playsInline width="400" height="400" autoPlay />
+      <video id={elementId} playsInline width="400" height="400" autoPlay />
+      { mediaConfig.idleVideos.map((idleVideo, index) => (
+        <video key={index} id={idleVideo.replace(".mp4", "")} src={idleVideo} onEnded={onVideoEnded} width="400" height="400" hidden muted />
+      ))}
 
       <div id="status">
         ICE gathering status: <label id="ice-gathering-status-label"></label>

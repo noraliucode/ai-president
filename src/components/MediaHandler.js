@@ -283,6 +283,7 @@ class MediaHandler {
 
   setVideoElement = (stream) => {
     if (!stream) return;
+    this.talkVideo.style.display = "block";
     this.talkVideo.srcObject = stream;
     this.talkVideo.muted = false;
     this.talkVideo.loop = false;
@@ -294,6 +295,12 @@ class MediaHandler {
         .then((_) => {})
         .catch((e) => {});
     }
+
+    this.idleVideos.forEach((idleVideo) => {
+      document.getElementById(
+        idleVideo.replace(".mp4", "")
+      ).style.display = "none";
+    });
   };
 
   playIdleVideo = () => {
@@ -302,11 +309,26 @@ class MediaHandler {
       Math.floor(Math.random() * this.idleVideos.length)
     ];
     console.log("playIdleVideo", randomIdleVideo);
+
+    // Hide the talk video
     this.talkVideo.srcObject = undefined;
-    this.talkVideo.src = randomIdleVideo
-    this.talkVideo.loop = false;
-    this.talkVideo.muted = true;
-    this.talkVideo.play();
+    this.talkVideo.style.display = "none";
+
+    this.idleVideos.forEach((idleVideo) => {
+      const idleVideoElement = document.getElementById(
+        idleVideo.replace(".mp4", "")
+      );
+      if (idleVideoElement) {
+        if (idleVideo === randomIdleVideo) {
+          // play the target idle video
+          idleVideoElement.style.display = "block";
+          idleVideoElement.play();
+        } else {
+          // hide all other idle videos
+          idleVideoElement.style.display = "none";
+        }
+      }
+    });
   };
 
   stopAllStreams = () => {
