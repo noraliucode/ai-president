@@ -97,7 +97,7 @@ const Debate: React.FC = () => {
   return (
     <div
       style={{
-        backgroundImage: 'url("/images/bg.png")',
+        backgroundImage: 'url("/images/bg3.png")',
         backgroundSize: "cover",
         backgroundRepeat: "no-repeat",
         backgroundPosition: "center",

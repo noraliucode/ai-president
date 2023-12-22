@@ -73,9 +73,9 @@ const ProgressBar: React.FC<ProgressBarProps> = ({
 const ProgressBars: React.FC = () => {
   return (
     <Box>
-      <ProgressBar label="科科 GPT" value={28} barColor="#FFD700" />
-      <ProgressBar label="賴賴 GPT" value={54} barColor="#4169E1" />
-      <ProgressBar label="侯侯 GPT" value={18} barColor="#FF69B4" />
+      <ProgressBar label="科科 GPT" value={28} barColor="#F7F975" />
+      <ProgressBar label="賴賴 GPT" value={54} barColor="#9093FF" />
+      <ProgressBar label="侯侯 GPT" value={18} barColor="#FF9DEF" />
     </Box>
   );
 };
