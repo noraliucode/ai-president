@@ -10,9 +10,9 @@ const imgUrls = {
 
 class MediaHandler {
   constructor(mediaConfig) {
-    const { role, url, idleVideo } = mediaConfig;
+    const { role, url, idleVideos } = mediaConfig;
     this.audioUrl = url;
-    this.idleVideo = idleVideo;
+    this.idleVideos = idleVideos;
     this.talkVideo = document.getElementById(role);
     this.mediaConfig = mediaConfig;
     this.peerConnection = null;
@@ -284,6 +284,7 @@ class MediaHandler {
   setVideoElement = (stream) => {
     if (!stream) return;
     this.talkVideo.srcObject = stream;
+    this.talkVideo.muted = false;
     this.talkVideo.loop = false;
 
     // safari hotfix
@@ -296,10 +297,16 @@ class MediaHandler {
   };
 
   playIdleVideo = () => {
-    console.log("playIdleVideo");
+    // Pick a random idle video
+    const randomIdleVideo = this.idleVideos[
+      Math.floor(Math.random() * this.idleVideos.length)
+    ];
+    console.log("playIdleVideo", randomIdleVideo);
     this.talkVideo.srcObject = undefined;
-    this.talkVideo.src = this.idleVideo;
-    this.talkVideo.loop = true;
+    this.talkVideo.src = randomIdleVideo
+    this.talkVideo.loop = false;
+    this.talkVideo.muted = true;
+    this.talkVideo.play();
   };
 
   stopAllStreams = () => {

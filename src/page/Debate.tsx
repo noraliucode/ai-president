@@ -145,7 +145,8 @@ const Debate: React.FC = () => {
                   // eslint-disable-next-line @typescript-eslint/ban-ts-comment
                   // @ts-ignore
                   url,
-                  idleVideo: `/idle_${role}.mp4`, // Assuming a naming convention for idle videos
+                  idleVideos: Array.from({ length: 5 }, (_, i) => `idle_${role}_${i}.mp4`),
+                  // Assuming a naming convention for idle videos
                 }}
                 shouldPlayVideo={shouldPlay}
                 shouldConnect={shouldConnect}

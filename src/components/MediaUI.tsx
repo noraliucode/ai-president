@@ -6,7 +6,7 @@ import MediaHandler from "./MediaHandler";
 interface MediaConfig {
   url: string;
   role: string;
-  idleVideo: string;
+  idleVideos: string[];
 }
 
 // Define the prop type for MediaUI
@@ -61,9 +61,15 @@ const MediaUI: React.FC<MediaUIProps> = ({
     }
   }, [shouldDestroy]);
 
+  const onVideoEnded = () => {
+    if (!mediaHandlerRef.current?.videoIsPlaying) {
+      mediaHandlerRef.current?.playIdleVideo();
+    }
+  };
+
   return (
     <div>
-      <video id={elementId} playsInline width="400" height="400" autoPlay />
+      <video id={elementId} onEnded={onVideoEnded} playsInline width="400" height="400" autoPlay />
 
       <div id="status">
         ICE gathering status: <label id="ice-gathering-status-label"></label>
