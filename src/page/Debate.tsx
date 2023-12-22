@@ -169,7 +169,7 @@ const Debate: React.FC = () => {
                   fontWeight: "bold",
                 }}
               >
-                山道猴子
+                {config.title}
               </Typography>
               <BlinkingElement />
             </>
