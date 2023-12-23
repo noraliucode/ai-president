@@ -13,7 +13,7 @@ const FullScreenVideo = styled("video")({
   zIndex: "-1",
 });
 
-const App: React.FC = () => {
+const FullScreenVideoAll: React.FC = () => {
   return (
     <div className="App">
       <FullScreenVideo autoPlay loop>
@@ -25,4 +25,4 @@ const App: React.FC = () => {
   );
 };
 
-export default App;
+export default FullScreenVideoAll;
