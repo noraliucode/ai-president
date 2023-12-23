@@ -114,7 +114,7 @@ const ProgressBars = () => {
       }
     };
 
-    const interval = setInterval(fetchChatData, 1000);
+    const interval = setInterval(fetchChatData, 6000);
     return () => clearInterval(interval);
   }, []);
 
