@@ -177,7 +177,7 @@ const Debate: React.FC = () => {
         </Grid>
         <Grid item xs={4}>
           {/* Third element goes here */}
-          {showVoting && <ProgressBar />}
+          {/* {showVoting && <ProgressBar />} */}
         </Grid>
       </Grid>
 
@@ -211,7 +211,7 @@ const Debate: React.FC = () => {
         )}
         <Countdown
           duration={
-            currentConfigIndex > -1
+            currentConfigIndex > -1 && currentConfigIndex < mediaConfigs.length
               ? mediaConfigs[currentConfigIndex].duration
               : 0
           }
