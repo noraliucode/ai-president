@@ -1,50 +1,115 @@
 {
-    "title": "山道猴子",
+    "title": "杰哥不要",
     "conversation": [
         {
             "role": "kp",
-            "url": "https://transfer.sh/zpiPsR13DL/2_kp_short.mp3",
-            "duration": 87.04
-        },
-        {
-            "role": "ho",
-            "url": "https://transfer.sh/0YDOhnM57z/3_ho_short.mp3",
-            "duration": 87.04
-        },
-        {
-            "role": "lai",
-            "url": "https://transfer.sh/hLN5PlN0i8/4_lai_short.mp3",
-            "duration": 87.04
-        },
-        {
-            "role": "ho",
-            "url": "https://transfer.sh/nJx2viPeNu/6_ho_short.mp3",
-            "duration": 87.04
+            "url": "https://oshi.at/ETEf/2_kp_0.mp3",
+            "duration": 85.00244897959183
         },
         {
             "role": "kp",
-            "url": "https://transfer.sh/UKrybTJP9C/7_kp_short.mp3",
-            "duration": 87.04
-        },
-        {
-            "role": "lai",
-            "url": "https://transfer.sh/NyzKF6yrae/8_lai_short.mp3",
-            "duration": 87.04
-        },
-        {
-            "role": "lai",
-            "url": "https://transfer.sh/gLxAjoV6At/10_lai_short.mp3",
-            "duration": 87.04
-        },
-        {
-            "role": "kp",
-            "url": "https://transfer.sh/5oOGn99EiA/11_kp.mp3",
-            "duration": 60.9175
+            "url": "https://oshi.at/mfWm/2_kp_1.mp3",
+            "duration": 4.3363265306122445
         },
         {
             "role": "ho",
-            "url": "https://transfer.sh/3fKW1ebjEr/12_ho_short.mp3",
-            "duration": 87.04
+            "url": "https://oshi.at/TUeg/3_ho_0.mp3",
+            "duration": 85.00244897959183
+        },
+        {
+            "role": "ho",
+            "url": "https://oshi.at/sBMA/3_ho_1.mp3",
+            "duration": 11.859591836734694
+        },
+        {
+            "role": "lai",
+            "url": "https://oshi.at/PXXE/4_lai_0.mp3",
+            "duration": 85.00244897959183
+        },
+        {
+            "role": "lai",
+            "url": "https://oshi.at/HZnz/4_lai_1.mp3",
+            "duration": 35.08244897959184
+        },
+        {
+            "role": "ho",
+            "url": "https://oshi.at/kQbU/6_ho_0.mp3",
+            "duration": 85.00244897959183
+        },
+        {
+            "role": "ho",
+            "url": "https://oshi.at/Nmrv/6_ho_1.mp3",
+            "duration": 11.258775510204082
+        },
+        {
+            "role": "kp",
+            "url": "https://oshi.at/Sayi/7_kp.mp3",
+            "duration": 78.57632653061225
+        },
+        {
+            "role": "lai",
+            "url": "https://oshi.at/YSkH/8_lai_0.mp3",
+            "duration": 85.00244897959183
+        },
+        {
+            "role": "lai",
+            "url": "https://oshi.at/XRCzw/8_lai_1.mp3",
+            "duration": 28.34285714285714
+        },
+        {
+            "role": "lai",
+            "url": "https://oshi.at/FwuR/10_lai_0.mp3",
+            "duration": 85.00244897959183
+        },
+        {
+            "role": "lai",
+            "url": "https://oshi.at/RSzv/10_lai_1.mp3",
+            "duration": 16.90122448979592
+        },
+        {
+            "role": "kp",
+            "url": "https://oshi.at/EKEz/11_kp_0.mp3",
+            "duration": 85.00244897959183
+        },
+        {
+            "role": "kp",
+            "url": "https://oshi.at/wzBbt/11_kp_1.mp3",
+            "duration": 5.381224489795918
+        },
+        {
+            "role": "ho",
+            "url": "https://oshi.at/TKVS/12_ho_0.mp3",
+            "duration": 85.00244897959183
+        },
+        {
+            "role": "ho",
+            "url": "https://oshi.at/BjLT/12_ho_1.mp3",
+            "duration": 16.79673469387755
+        },
+        {
+            "role": "kp",
+            "url": "https://oshi.at/grrX/14_kp.mp3",
+            "duration": 81.03183673469388
+        },
+        {
+            "role": "ho",
+            "url": "https://oshi.at/bQwJ/16_ho_0.mp3",
+            "duration": 85.00244897959183
+        },
+        {
+            "role": "ho",
+            "url": "https://oshi.at/NoSF/16_ho_1.mp3",
+            "duration": 1.6979591836734693
+        },
+        {
+            "role": "lai",
+            "url": "https://oshi.at/BJgv/18_lai_0.mp3",
+            "duration": 85.00244897959183
+        },
+        {
+            "role": "lai",
+            "url": "https://oshi.at/kmsv/18_lai_1.mp3",
+            "duration": 10.65795918367347
         }
     ]
 }

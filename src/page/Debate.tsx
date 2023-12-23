@@ -5,6 +5,9 @@ import config from "./conversation.json";
 import Grid from "@mui/material/Grid";
 import { Typography } from "@mui/material";
 import ProgressBar from "../components/ProgressBars";
+import Countdown from "../components/Countdown";
+import Footer from "../components/Footer";
+import BlinkingElement from "../components/BlinkingElement";
 
 const mediaConfigs = config.conversation;
 
@@ -107,7 +110,7 @@ const Debate: React.FC = () => {
         backgroundRepeat: "no-repeat",
         backgroundPosition: "center",
         height: "100vh",
-        paddingTop: "40px",
+        padding: "40px 60px 0 60px",
       }}
     >
       <Grid
@@ -155,18 +158,21 @@ const Debate: React.FC = () => {
             >
               辯題
             </Typography>
-            <Typography
-              sx={{
-                fontSize: "2rem",
-                color: "white",
-                padding: "8px",
-                userSelect: "none",
-                textAlign: "center",
-                fontWeight: "bold",
-              }}
-            >
-              山道猴子
-            </Typography>
+            <>
+              <Typography
+                sx={{
+                  fontSize: "2rem",
+                  color: "white",
+                  padding: "8px",
+                  userSelect: "none",
+                  textAlign: "center",
+                  fontWeight: "bold",
+                }}
+              >
+                {config.title}
+              </Typography>
+              <BlinkingElement />
+            </>
           </div>
         </Grid>
         <Grid item xs={4}>
@@ -181,6 +187,7 @@ const Debate: React.FC = () => {
           display: "flex",
           justifyContent: "space-between",
           marginBottom: "20px",
+          marginTop: "60px",
         }}
       >
         {Object.entries(mediaStates).map(
@@ -198,10 +205,19 @@ const Debate: React.FC = () => {
                 shouldPlayVideo={shouldPlay}
                 shouldConnect={shouldConnect}
                 shouldDestroy={shouldDestroy}
+                label={role}
               />
             </div>
           )
         )}
+        <Countdown
+          duration={
+            currentConfigIndex > -1
+              ? mediaConfigs[currentConfigIndex].duration
+              : 0
+          }
+        />
+        <Footer />
       </div>
 
       <div
