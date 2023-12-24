@@ -12,9 +12,16 @@ import PhraseTitle from "../components/PhraseTitle";
 
 const mediaConfigs = config.conversation;
 
+interface MediaConfig {
+  role: string;
+  url: string;
+  duration: number;
+}
+
 const Debate: React.FC = () => {
   const [currentConfigIndex, setCurrentConfigIndex] = useState(-1);
   const [showVoting, setVoting] = useState(true);
+  const [currentConfig, setCurrentConfig] = useState<MediaConfig | null>(null);
   const [mediaStates, setMediaStates] = useState({
     kp: {
       url: null,
@@ -50,8 +57,12 @@ const Debate: React.FC = () => {
 
   useEffect(() => {
     if (currentConfigIndex < 0 || currentConfigIndex >= mediaConfigs.length) {
+      setCurrentConfig(null);
       return;
     }
+
+    const config = mediaConfigs[currentConfigIndex];
+    setCurrentConfig(config);
 
     const currentConfig = mediaConfigs[currentConfigIndex];
     updateMediaStateForRole(currentConfig.role, {
