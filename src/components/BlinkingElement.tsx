@@ -4,22 +4,28 @@ import Typography from "@mui/material/Typography";
 import { styled } from "@mui/system";
 
 // Styled component for the red circle
-const RedCircle = styled("div")({
+const WhiteCircle = styled("div")({
   width: "16px",
   height: "16px",
   borderRadius: "50%",
-  backgroundColor: "red",
+  backgroundColor: "white",
   marginRight: "8px",
 });
 
-// Styled component for the container with the blinking animation
+// Styled component for the container with the blinking animation, red background, and fixed position
 const BlinkingBox = styled(Box)(({ theme }) => ({
+  height: "40px", // Set height to 40px
   justifyContent: "center",
-  marginTop: theme.spacing(1),
   display: "flex",
   alignItems: "center",
-  width: "100%",
-  animation: "blink 3s infinite", // Set to blink every 5 seconds infinitely
+  width: "300px", // Set width to 300px
+  backgroundColor: "red", // Set background color to red
+  position: "fixed", // Make the box fixed at the top
+  top: 0, // Stick to the top of the viewport
+  left: "50%", // Horizontally center the box
+  transform: "translateX(-50%)", // Adjust for exact centering
+  zIndex: 1000, // Ensure it stays on top of other elements
+  animation: "blink 3s infinite", // Set to blink every 3 seconds infinitely
   "@keyframes blink": {
     "0%": { opacity: 1 },
     "50%": { opacity: 0.5 },
@@ -30,11 +36,11 @@ const BlinkingBox = styled(Box)(({ theme }) => ({
 const BlinkingElement: React.FC = () => {
   return (
     <BlinkingBox>
-      <RedCircle />
+      <WhiteCircle />
       <Typography
         variant="h6"
         sx={{
-          color: "white",
+          color: "white", // Text color is white
           userSelect: "none",
           textAlign: "center",
           fontWeight: "bold",

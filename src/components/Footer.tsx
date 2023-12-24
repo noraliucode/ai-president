@@ -17,12 +17,14 @@ const Footer: React.FC = () => {
       }}
     >
       {/* Centered text */}
-      <Typography variant="body1">
+      <Typography variant="body1" sx={{ fontSize: "30px" }}>
         以上內容為100%AI生成，純屬虛構，認真就輸了。
       </Typography>
 
       {/* Absolute positioning for the link */}
-      <Box sx={{ position: "fixed", right: 16, bottom: 0, color: "white" }}>
+      <Box
+        sx={{ position: "fixed", right: 16, bottom: "20px", color: "white" }}
+      >
         <Typography variant="body2">
           <Link color="inherit" href="https://newtypelab.org" underline="hover">
             newtypelab.org
