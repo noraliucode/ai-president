@@ -72,13 +72,27 @@ const MediaUI: React.FC<MediaUIProps> = ({
 
   return (
     <div>
+      <style>
+        {`
+          @keyframes blink-border {
+            0% { border-color: red; }
+            50% { border-color: white; }
+            100% { border-color: red; }
+          }
+
+          .blinking-border {
+            animation: blink-border 1s linear infinite;
+          }
+        `}
+      </style>
       <video
+        className={shouldPlayVideo ? "blinking-border" : ""}
         id={elementId}
         playsInline
         width="400"
         height="400"
         autoPlay
-        style={{ border: "2px solid white" }}
+        style={{ border: "3px solid white" }}
       />
       <Box
         sx={{
