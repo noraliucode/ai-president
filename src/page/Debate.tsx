@@ -8,6 +8,7 @@ import ProgressBar from "../components/ProgressBars";
 import Countdown from "../components/Countdown";
 import Footer from "../components/Footer";
 import BlinkingElement from "../components/BlinkingElement";
+import PhraseTitle from "../components/PhraseTitle";
 
 const mediaConfigs = config.conversation;
 
@@ -140,6 +141,7 @@ const Debate: React.FC = () => {
           }}
         >
           <BlinkingElement />
+          <PhraseTitle text={"text"} />
         </Grid>
         <Grid item xs={4} sx={{ display: "flex", justifyContent: "flex-end" }}>
           <div
