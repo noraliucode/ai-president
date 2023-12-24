@@ -127,7 +127,6 @@ const Debate: React.FC = () => {
               width: "100%",
               height: "auto",
               maxWidth: "300px",
-              marginLeft: "40px",
             }}
           />
         </Grid>
@@ -140,6 +139,9 @@ const Debate: React.FC = () => {
             alignItems: "center",
           }}
         >
+          <BlinkingElement />
+        </Grid>
+        <Grid item xs={4} sx={{ display: "flex", justifyContent: "flex-end" }}>
           <div
             style={{
               backgroundImage: "url(/images/title_bg.png)",
@@ -171,13 +173,8 @@ const Debate: React.FC = () => {
               >
                 {config.title}
               </Typography>
-              <BlinkingElement />
             </>
           </div>
-        </Grid>
-        <Grid item xs={4}>
-          {/* Third element goes here */}
-          {/* {showVoting && <ProgressBar />} */}
         </Grid>
       </Grid>
 
