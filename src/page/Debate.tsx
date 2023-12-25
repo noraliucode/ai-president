@@ -241,6 +241,7 @@ const Debate: React.FC = () => {
               key={role}
               className="card"
               style={{
+                margin: "0 20px",
                 // Hide the element if currentConfig.phrase is "cross examination" and
                 // the role is not "speaker" and shouldPlay is not true
                 display:
