@@ -17,6 +17,7 @@ interface MediaUIProps {
   shouldPlayVideo: boolean;
   shouldDestroy: boolean;
   label: string;
+  shouldDelayPlayStart: boolean;
 }
 
 const LABEL: { [key: string]: string } = {
@@ -31,6 +32,7 @@ const MediaUI: React.FC<MediaUIProps> = ({
   shouldPlayVideo,
   shouldDestroy,
   label,
+  shouldDelayPlayStart,
 }) => {
   // Assume the first config is the active config initially
   const mediaHandlerRef = useRef<MediaHandler | null>(null);
@@ -86,7 +88,9 @@ const MediaUI: React.FC<MediaUIProps> = ({
         `}
       </style>
       <video
-        className={shouldPlayVideo ? "blinking-border" : ""}
+        className={
+          shouldPlayVideo && shouldDelayPlayStart ? "blinking-border" : ""
+        }
         id={elementId}
         playsInline
         width="400"

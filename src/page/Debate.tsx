@@ -16,7 +16,6 @@ const Role: { [key: string]: string } = {
   lai: "賴賴 GPT",
   ho: "侯侯 GPT",
 };
-export const DELAY = 10; // seconds
 
 interface MediaConfig {
   role: string;
@@ -33,7 +32,8 @@ enum Phrase {
 const Debate: React.FC = () => {
   const [currentConfigIndex, setCurrentConfigIndex] = useState(-1);
   const [showVoting, setVoting] = useState(true);
-  const [delay, setDelay] = useState(false);
+  const [shouldDelayPlayStart, setDelay] = useState(false);
+  console.log("shouldDelayPlayStart >>", shouldDelayPlayStart);
 
   const [speecher, setSpeecher] = useState<string | null>(null); // Naming can be confusing. It's the one who gives speech in the constructive speech phrase.
   const [currentConfig, setCurrentConfig] = useState<MediaConfig | null>(null);
@@ -78,6 +78,9 @@ const Debate: React.FC = () => {
 
     const config = mediaConfigs[currentConfigIndex];
     setCurrentConfig(config);
+    setTimeout(() => {
+      setDelay(true);
+    }, 10000);
 
     const currentConfig = mediaConfigs[currentConfigIndex];
     if (currentConfig.phrase === Phrase.ConstructiveSpeech) {
@@ -90,15 +93,14 @@ const Debate: React.FC = () => {
     });
 
     const nextConfig = mediaConfigs[currentConfigIndex + 1];
-    setDelay(true);
-    setTimeout(() => {
-      setDelay(false);
-    }, 10000 + currentConfig.duration * 1000);
     const buffering = nextConfig?.role === currentConfig.role ? 0 : 1000;
 
     const timer = setTimeout(() => {
       updateMediaStateForRole(currentConfig.role, { shouldPlay: false });
       setCurrentConfigIndex((currentIndex) => currentIndex + 1);
+      setTimeout(() => {
+        setDelay(false);
+      }, 10000);
     }, currentConfig.duration * 1000 + buffering); // 1000ms buffering
 
     return () => clearTimeout(timer);
@@ -138,9 +140,15 @@ const Debate: React.FC = () => {
   };
 
   const getPhraseTitle = () => {
-    if (currentConfig?.phrase === Phrase.ConstructiveSpeech) {
+    if (
+      currentConfig?.phrase === Phrase.ConstructiveSpeech &&
+      shouldDelayPlayStart
+    ) {
       return `${Role[currentConfig?.role]} 申論`;
-    } else if (currentConfig?.phrase === Phrase.CrossExamination) {
+    } else if (
+      currentConfig?.phrase === Phrase.CrossExamination &&
+      shouldDelayPlayStart
+    ) {
       return `${Role[currentConfig?.role]} 質詢`;
     } else {
       return "";
@@ -247,13 +255,14 @@ const Debate: React.FC = () => {
                 // the role is not "speaker" and shouldPlay is not true
                 display:
                   currentConfig?.phrase === Phrase.CrossExamination &&
-                  !delay &&
+                  shouldDelayPlayStart &&
                   !(shouldPlay || role === speecher)
                     ? "none"
                     : "block",
               }}
             >
               <MediaUI
+                shouldDelayPlayStart={shouldDelayPlayStart}
                 mediaConfig={{
                   role,
                   // eslint-disable-next-line @typescript-eslint/ban-ts-comment
@@ -270,6 +279,7 @@ const Debate: React.FC = () => {
           )
         )}
         <Countdown
+          shouldDelayPlayStart={shouldDelayPlayStart}
           duration={
             currentConfigIndex > -1 && currentConfigIndex < mediaConfigs.length
               ? mediaConfigs[currentConfigIndex].duration

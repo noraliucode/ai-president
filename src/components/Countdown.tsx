@@ -1,19 +1,24 @@
 import React, { useState, useEffect } from "react";
 import { Box, Typography } from "@mui/material";
-import { DELAY } from "../page/Debate";
 
-const Countdown = ({ duration }: { duration: number }) => {
+const Countdown = ({
+  duration,
+  shouldDelayPlayStart,
+}: {
+  duration: number;
+  shouldDelayPlayStart: boolean;
+}) => {
   const [counter, setCounter] = useState(Math.round(duration));
 
   useEffect(() => {
     // Round the duration to avoid displaying decimals
-    setCounter(Math.round(duration + DELAY));
+    setCounter(Math.round(duration));
   }, [duration]);
 
   useEffect(() => {
     let timerId: NodeJS.Timer | undefined;
 
-    if (counter > 0) {
+    if (counter > 0 && shouldDelayPlayStart) {
       timerId = setInterval(
         () => setCounter((prevCounter) => prevCounter - 1),
         1000
@@ -26,7 +31,7 @@ const Countdown = ({ duration }: { duration: number }) => {
     return () => {
       if (timerId) clearInterval(timerId);
     };
-  }, [counter]);
+  }, [counter, shouldDelayPlayStart]);
 
   // Convert the remaining time into minutes and seconds for display
   const minutes = Math.floor(counter / 60)
