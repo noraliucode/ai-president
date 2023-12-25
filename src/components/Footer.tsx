@@ -23,9 +23,12 @@ const Footer: React.FC = () => {
 
       {/* Absolute positioning for the link */}
       <Box
-        sx={{ position: "fixed", right: 16, bottom: "20px", color: "white" }}
+        sx={{ position: "fixed", right: 16, bottom: "25px", color: "white" }}
       >
-        <Typography variant="body2">
+        <Typography
+          variant="body2"
+          sx={{ fontSize: "20px", letterSpacing: "4px" }}
+        >
           <Link color="inherit" href="https://newtypelab.org" underline="hover">
             newtypelab.org
           </Link>

@@ -170,7 +170,7 @@ const Debate: React.FC = () => {
             style={{
               width: "100%",
               height: "auto",
-              maxWidth: "300px",
+              maxWidth: "355px",
             }}
           />
         </Grid>
