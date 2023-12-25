@@ -18,9 +18,12 @@ const PhraseTitle: React.FC<PhraseTitleProps> = ({ text }) => {
         display: "flex",
         alignItems: "center",
         justifyContent: "center",
+        marginTop: "20px",
       }}
     >
-      <Typography sx={{ color: "yellow", fontWeight: "bold" }}>
+      <Typography
+        sx={{ color: "yellow", fontWeight: "bold", fontSize: "30px" }}
+      >
         {text}
       </Typography>
     </Box>

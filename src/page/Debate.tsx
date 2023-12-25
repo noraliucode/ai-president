@@ -11,16 +11,30 @@ import BlinkingElement from "../components/BlinkingElement";
 import PhraseTitle from "../components/PhraseTitle";
 
 const mediaConfigs = config.conversation;
+const Role: { [key: string]: string } = {
+  kp: "柯柯 GPT",
+  lai: "賴賴 GPT",
+  ho: "侯侯 GPT",
+};
 
 interface MediaConfig {
   role: string;
   url: string;
   duration: number;
+  phrase: string;
+}
+
+enum Phrase {
+  ConstructiveSpeech = "constructive speech",
+  CrossExamination = "cross examination",
 }
 
 const Debate: React.FC = () => {
   const [currentConfigIndex, setCurrentConfigIndex] = useState(-1);
   const [showVoting, setVoting] = useState(true);
+  const [delay, setDelay] = useState(false);
+
+  const [speecher, setSpeecher] = useState<string | null>(null); // Naming can be confusing. It's the one who gives speech in the constructive speech phrase.
   const [currentConfig, setCurrentConfig] = useState<MediaConfig | null>(null);
   const [mediaStates, setMediaStates] = useState({
     kp: {
@@ -65,12 +79,20 @@ const Debate: React.FC = () => {
     setCurrentConfig(config);
 
     const currentConfig = mediaConfigs[currentConfigIndex];
+    if (currentConfig.phrase === Phrase.ConstructiveSpeech) {
+      setSpeecher(config.role);
+    }
+
     updateMediaStateForRole(currentConfig.role, {
       url: currentConfig.url,
       shouldPlay: true,
     });
 
     const nextConfig = mediaConfigs[currentConfigIndex + 1];
+    setDelay(true);
+    setTimeout(() => {
+      setDelay(false);
+    }, 10000 + currentConfig.duration * 1000);
     const buffering = nextConfig?.role === currentConfig.role ? 0 : 1000;
 
     const timer = setTimeout(() => {
@@ -114,6 +136,16 @@ const Debate: React.FC = () => {
     setVoting(!showVoting);
   };
 
+  const getPhraseTitle = () => {
+    if (currentConfig?.phrase === Phrase.ConstructiveSpeech) {
+      return `${Role[currentConfig?.role]} 申論`;
+    } else if (currentConfig?.phrase === Phrase.CrossExamination) {
+      return `${Role[currentConfig?.role]} 質詢`;
+    } else {
+      return "";
+    }
+  };
+
   return (
     <div
       style={{
@@ -152,7 +184,7 @@ const Debate: React.FC = () => {
           }}
         >
           <BlinkingElement />
-          <PhraseTitle text={"text"} />
+          <PhraseTitle text={getPhraseTitle()} />
         </Grid>
         <Grid item xs={4} sx={{ display: "flex", justifyContent: "flex-end" }}>
           <div
@@ -195,14 +227,30 @@ const Debate: React.FC = () => {
       <div
         style={{
           display: "flex",
-          justifyContent: "space-between",
+          justifyContent:
+            currentConfig?.phrase === Phrase.CrossExamination
+              ? "center"
+              : "space-between",
           marginBottom: "20px",
           marginTop: "60px",
         }}
       >
         {Object.entries(mediaStates).map(
           ([role, { url, shouldPlay, shouldConnect, shouldDestroy }]) => (
-            <div key={role} className="card">
+            <div
+              key={role}
+              className="card"
+              style={{
+                // Hide the element if currentConfig.phrase is "cross examination" and
+                // the role is not "speaker" and shouldPlay is not true
+                display:
+                  currentConfig?.phrase === Phrase.CrossExamination &&
+                  !delay &&
+                  !(shouldPlay || role === speecher)
+                    ? "none"
+                    : "block",
+              }}
+            >
               <MediaUI
                 mediaConfig={{
                   role,

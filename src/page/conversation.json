@@ -1,115 +1,59 @@
 {
-    "title": "杰哥不要",
+    "title": "帝王條款",
     "conversation": [
         {
             "role": "kp",
-            "url": "https://oshi.at/ETEf/2_kp_0.mp3",
-            "duration": 85.00244897959183
+            "url": "https://oshi.at/CAUeT/2_kp.mp3",
+            "duration": 46.88979591836735,
+            "phrase": "constructive speech"
+        },
+        {
+            "role": "ho",
+            "url": "https://oshi.at/PBCT/3_ho.mp3",
+            "duration": 62.667755102040815,
+            "phrase": "cross examination"
+        },
+        {
+            "role": "lai",
+            "url": "https://oshi.at/eCvz/4_lai.mp3",
+            "duration": 66.82122448979592,
+            "phrase": "cross examination"
+        },
+        {
+            "role": "ho",
+            "url": "https://oshi.at/VpWot/6_ho.mp3",
+            "duration": 69.32897959183674,
+            "phrase": "constructive speech"
         },
         {
             "role": "kp",
-            "url": "https://oshi.at/mfWm/2_kp_1.mp3",
-            "duration": 4.3363265306122445
-        },
-        {
-            "role": "ho",
-            "url": "https://oshi.at/TUeg/3_ho_0.mp3",
-            "duration": 85.00244897959183
-        },
-        {
-            "role": "ho",
-            "url": "https://oshi.at/sBMA/3_ho_1.mp3",
-            "duration": 11.859591836734694
+            "url": "https://oshi.at/RjbU/7_kp.mp3",
+            "duration": 54.51755102040816,
+            "phrase": "cross examination"
         },
         {
             "role": "lai",
-            "url": "https://oshi.at/PXXE/4_lai_0.mp3",
-            "duration": 85.00244897959183
+            "url": "https://oshi.at/nuvL/8_lai.mp3",
+            "duration": 62.58938775510204,
+            "phrase": "cross examination"
         },
         {
             "role": "lai",
-            "url": "https://oshi.at/HZnz/4_lai_1.mp3",
-            "duration": 35.08244897959184
-        },
-        {
-            "role": "ho",
-            "url": "https://oshi.at/kQbU/6_ho_0.mp3",
-            "duration": 85.00244897959183
-        },
-        {
-            "role": "ho",
-            "url": "https://oshi.at/Nmrv/6_ho_1.mp3",
-            "duration": 11.258775510204082
+            "url": "https://oshi.at/yqHc/10_lai.mp3",
+            "duration": 56.842448979591836,
+            "phrase": "constructive speech"
         },
         {
             "role": "kp",
-            "url": "https://oshi.at/Sayi/7_kp.mp3",
-            "duration": 78.57632653061225
-        },
-        {
-            "role": "lai",
-            "url": "https://oshi.at/YSkH/8_lai_0.mp3",
-            "duration": 85.00244897959183
-        },
-        {
-            "role": "lai",
-            "url": "https://oshi.at/XRCzw/8_lai_1.mp3",
-            "duration": 28.34285714285714
-        },
-        {
-            "role": "lai",
-            "url": "https://oshi.at/FwuR/10_lai_0.mp3",
-            "duration": 85.00244897959183
-        },
-        {
-            "role": "lai",
-            "url": "https://oshi.at/RSzv/10_lai_1.mp3",
-            "duration": 16.90122448979592
-        },
-        {
-            "role": "kp",
-            "url": "https://oshi.at/EKEz/11_kp_0.mp3",
-            "duration": 85.00244897959183
-        },
-        {
-            "role": "kp",
-            "url": "https://oshi.at/wzBbt/11_kp_1.mp3",
-            "duration": 5.381224489795918
+            "url": "https://oshi.at/vUNff/11_kp.mp3",
+            "duration": 50.59918367346939,
+            "phrase": "cross examination"
         },
         {
             "role": "ho",
-            "url": "https://oshi.at/TKVS/12_ho_0.mp3",
-            "duration": 85.00244897959183
-        },
-        {
-            "role": "ho",
-            "url": "https://oshi.at/BjLT/12_ho_1.mp3",
-            "duration": 16.79673469387755
-        },
-        {
-            "role": "kp",
-            "url": "https://oshi.at/grrX/14_kp.mp3",
-            "duration": 81.03183673469388
-        },
-        {
-            "role": "ho",
-            "url": "https://oshi.at/bQwJ/16_ho_0.mp3",
-            "duration": 85.00244897959183
-        },
-        {
-            "role": "ho",
-            "url": "https://oshi.at/NoSF/16_ho_1.mp3",
-            "duration": 1.6979591836734693
-        },
-        {
-            "role": "lai",
-            "url": "https://oshi.at/BJgv/18_lai_0.mp3",
-            "duration": 85.00244897959183
-        },
-        {
-            "role": "lai",
-            "url": "https://oshi.at/kmsv/18_lai_1.mp3",
-            "duration": 10.65795918367347
+            "url": "https://oshi.at/ZHHeS/12_ho.mp3",
+            "duration": 74.10938775510203,
+            "phrase": "cross examination"
         }
     ]
 }
