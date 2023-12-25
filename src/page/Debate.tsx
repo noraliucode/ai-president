@@ -152,7 +152,7 @@ const Debate: React.FC = () => {
           }}
         >
           <BlinkingElement />
-          <PhraseTitle text={"text"} />
+          {/* <PhraseTitle text={"text"} /> */}
         </Grid>
         <Grid item xs={4} sx={{ display: "flex", justifyContent: "flex-end" }}>
           <div
