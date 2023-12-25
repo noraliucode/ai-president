@@ -16,6 +16,7 @@ const Role: { [key: string]: string } = {
   lai: "賴賴 GPT",
   ho: "侯侯 GPT",
 };
+export const DELAY = 10; // seconds
 
 interface MediaConfig {
   role: string;
