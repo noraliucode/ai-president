@@ -17,6 +17,8 @@ const Role: { [key: string]: string } = {
   ho: "侯侯 GPT",
 };
 
+const DelayTime = 17000;
+
 interface MediaConfig {
   role: string;
   url: string;
@@ -80,7 +82,7 @@ const Debate: React.FC = () => {
     setCurrentConfig(config);
     setTimeout(() => {
       setDelay(true);
-    }, 10000);
+    }, DelayTime);
 
     const currentConfig = mediaConfigs[currentConfigIndex];
     if (currentConfig.phrase === Phrase.ConstructiveSpeech) {
@@ -100,7 +102,7 @@ const Debate: React.FC = () => {
       setCurrentConfigIndex((currentIndex) => currentIndex + 1);
       setTimeout(() => {
         setDelay(false);
-      }, 10000);
+      }, DelayTime);
     }, currentConfig.duration * 1000 + buffering); // 1000ms buffering
 
     return () => clearTimeout(timer);
