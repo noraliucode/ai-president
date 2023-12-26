@@ -11,7 +11,6 @@ import BlinkingElement from "../components/BlinkingElement";
 import PhraseTitle from "../components/PhraseTitle";
 
 const mediaConfigs = config.conversation;
-export const DELAY = 10; // seconds
 
 interface MediaConfig {
   role: string;

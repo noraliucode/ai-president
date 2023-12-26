@@ -1,13 +1,12 @@
 import React, { useState, useEffect } from "react";
 import { Box, Typography } from "@mui/material";
-import { DELAY } from "../page/Debate";
 
 const Countdown = ({ duration }: { duration: number }) => {
   const [counter, setCounter] = useState(Math.round(duration));
 
   useEffect(() => {
     // Round the duration to avoid displaying decimals
-    setCounter(Math.round(duration + DELAY));
+    setCounter(Math.round(duration));
   }, [duration]);
 
   useEffect(() => {
