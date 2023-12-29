@@ -10,9 +10,9 @@ const imgUrls = {
 
 class MediaHandler {
   constructor(mediaConfig) {
-    const { role, url, idleVideo } = mediaConfig;
+    const { role, url, idleVideos } = mediaConfig;
     this.audioUrl = url;
-    this.idleVideo = idleVideo;
+    this.idleVideos = idleVideos;
     this.talkVideo = document.getElementById(role);
     this.mediaConfig = mediaConfig;
     this.peerConnection = null;
@@ -283,7 +283,9 @@ class MediaHandler {
 
   setVideoElement = (stream) => {
     if (!stream) return;
+    this.talkVideo.style.display = "block";
     this.talkVideo.srcObject = stream;
+    this.talkVideo.muted = false;
     this.talkVideo.loop = false;
 
     // safari hotfix
@@ -293,13 +295,40 @@ class MediaHandler {
         .then((_) => {})
         .catch((e) => {});
     }
+
+    this.idleVideos.forEach((idleVideo) => {
+      document.getElementById(
+        idleVideo.replace(".mp4", "")
+      ).style.display = "none";
+    });
   };
 
   playIdleVideo = () => {
-    console.log("playIdleVideo");
+    // Pick a random idle video
+    const randomIdleVideo = this.idleVideos[
+      Math.floor(Math.random() * this.idleVideos.length)
+    ];
+    console.log("playIdleVideo", randomIdleVideo);
+
+    // Hide the talk video
     this.talkVideo.srcObject = undefined;
-    this.talkVideo.src = this.idleVideo;
-    this.talkVideo.loop = true;
+    this.talkVideo.style.display = "none";
+
+    this.idleVideos.forEach((idleVideo) => {
+      const idleVideoElement = document.getElementById(
+        idleVideo.replace(".mp4", "")
+      );
+      if (idleVideoElement) {
+        if (idleVideo === randomIdleVideo) {
+          // play the target idle video
+          idleVideoElement.style.display = "block";
+          idleVideoElement.play();
+        } else {
+          // hide all other idle videos
+          idleVideoElement.style.display = "none";
+        }
+      }
+    });
   };
 
   stopAllStreams = () => {

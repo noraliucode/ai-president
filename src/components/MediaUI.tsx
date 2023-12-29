@@ -7,7 +7,7 @@ import { Box, Typography } from "@mui/material";
 interface MediaConfig {
   url: string;
   role: string;
-  idleVideo: string;
+  idleVideos: string[];
 }
 
 // Define the prop type for MediaUI
@@ -70,6 +70,12 @@ const MediaUI: React.FC<MediaUIProps> = ({
     }
   }, [shouldDestroy]);
 
+  const onVideoEnded = () => {
+    if (!mediaHandlerRef.current?.videoIsPlaying) {
+      mediaHandlerRef.current?.playIdleVideo();
+    }
+  };
+
   return (
     <div>
       <style>
@@ -94,6 +100,9 @@ const MediaUI: React.FC<MediaUIProps> = ({
         autoPlay
         style={{ border: "3px solid white" }}
       />
+      { mediaConfig.idleVideos.map((idleVideo, index) => (
+        <video key={index} id={idleVideo.replace(".mp4", "")} src={idleVideo} onEnded={onVideoEnded} width="400" height="400" hidden muted />
+      ))}
       <Box
         sx={{
           position: "absolute",
